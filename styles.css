@@ -1,84 +1,52 @@
-:root {
-  --primary: #ff671f; /* Saffron */
-  --secondary: #046a38; /* Indian Green */
-  --accent: #013369; /* Navy */
-  /* --bg: #F3F4F6;        Neutral background */
-  --text: #1f2937; /* Slate-800 */
-  --border: #d1d5db; /* Slate-300 */
+/* =========================
+   Core theme variables
+   ========================= */
+:root{
+  --primary:   #ff671f;   /* Saffron */
+  --secondary: #046a38;   /* Indian Green */
+  --accent:    #013369;   /* Navy */
+  --bg:        #F3F4F6;   /* Neutral background */
+  --text:      #1f2937;   /* Slate-800 */
+  --border:    #d1d5db;   /* Slate-300 */
 }
 
-html,
-body {
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-    "Noto Sans", "Helvetica Neue", sans-serif;
-  background: var(--bg);
+/* =========================
+   Base
+   ========================= */
+html, body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
   background-image: url(./assets/3b420f6f3a245321e30c009b5603ccbb.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  color: var(--text);
   scroll-behavior: smooth;
 }
-/* ===== NAVBAR RESTORE / POLISH ===== */
-/* keeps left, center, right in proper alignment */
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-/* sticky top */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
+
+/* =========================
+   Navbar (left | center | right)
+   ========================= */
+.navbar{ position: sticky; top: 0; z-index: 1050; background: #fff; }
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.nav-center{ flex:1; display:flex; justify-content:center; }
+.nav-right, .nav-left{ white-space:nowrap; }
+
+/* =========================
+   Scroll progress bar
+   ========================= */
+.scroll-watcher{
+  position: fixed; top:0; left:0; height:4px; width:0;
+  background: linear-gradient(90deg, var(--primary), #ffffff 50%, var(--secondary));
+  z-index: 1105; transition: width .08s linear;
 }
 
-/* must stretch so center stays centered */
-.nav-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-/* ensure dropdowns kept right */
-.nav-right {
-  white-space: nowrap;
-}
-
-/* brand left */
-.nav-left {
-  white-space: nowrap;
-}
-
-/* keep scroll bar visible above nav */
-.scroll-watcher {
-  z-index: 1105;
-}
-
-/* Scroll progress */
-.scroll-watcher {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 0;
-  background: linear-gradient(
-    90deg,
-    var(--primary),
-    #ffffff 50%,
-    var(--secondary)
-  );
-  z-index: 1100;
-  transition: width 0.08s linear;
-}
-
-/* Brand / Theme helpers */
-.brand-text {
-  color: var(--accent);
-}
-.btn-primary {
+/* =========================
+   Theme helpers
+   ========================= */
+.brand-text{ color: var(--accent); }
+.btn-primary{
   --bs-btn-bg: var(--primary);
   --bs-btn-border-color: var(--primary);
   --bs-btn-hover-bg: #e65e1d;
@@ -86,362 +54,151 @@ body {
   --bs-btn-active-bg: #cc541a;
   --bs-btn-active-border-color: #cc541a;
 }
-.btn-outline-theme {
+.btn-outline-theme{
   --bs-btn-color: var(--text);
   --bs-btn-border-color: var(--border);
   --bs-btn-hover-bg: #fff;
   --bs-btn-hover-border-color: var(--text);
-  background: #ffffffcc;
-  backdrop-filter: blur(6px);
+  background: #ffffffcc; backdrop-filter: blur(6px);
 }
 
 /* Hero badge */
-.hero-badge {
-  background: #fff3eb;
-  color: var(--primary);
-  border: 1px solid #ffd7c2;
+.hero-badge{
+  background:#FFF3EB; color:var(--primary); border:1px solid #FFD7C2;
   animation: floaty 5s ease-in-out infinite;
 }
-.carousel-img {
-  width: 100%;
-  height: 400px;     /* choose any fixed height */
-  object-fit: contain;
-  background: transparent;  /* optional so frame looks clean */
+
+/* Carousel images (uniform fit) */
+.carousel-img{
+  width:100%; height:400px; object-fit:contain; background:transparent;
 }
 
-
-/* Cards / tiles */
-.border-theme {
-  border: 1px solid var(--border) !important;
+/* Cards / Tiles */
+.border-theme{ border:1px solid var(--border) !important; }
+.feature-number{ width:40px; height:40px; font-weight:700; }
+.stat-tile{
+  border:1px solid var(--border); border-radius:16px; padding:20px;
+  background:#ffffffe6;
 }
-.feature-number {
-  width: 40px;
-  height: 40px;
-  font-weight: 700;
-}
-.stat-tile {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  background: #ffffffe6;
-}
-.stat-value {
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--accent);
-}
-.stat-label {
-  font-size: 13px;
-  color: #475569;
-}
+.stat-value{ font-size:26px; font-weight:800; color:var(--accent); }
+.stat-label{ font-size:13px; color:#475569; }
 
 /* CTA band */
-.cta-band {
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
-  background: #fffffff2;
-  backdrop-filter: blur(6px);
-  margin-top: 28px;
+.cta-band{
+  border:1px solid var(--border); border-radius:18px; padding:24px;
+  background:#fffffff2; backdrop-filter: blur(6px); margin-top:28px;
 }
 
 /* Footer */
-.footer-link {
-  color: var(--text);
-  text-decoration: none;
-}
-.footer-link:hover {
-  color: var(--accent);
-  text-decoration: underline;
-}
-.swatch {
-  width: 24px;
-  height: 24px;
-}
+.footer-link{ color:var(--text); text-decoration:none; }
+.footer-link:hover{ color:var(--accent); text-decoration:underline; }
+.swatch{ width:24px; height:24px; }
 
 /* Reveal on scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.show{ opacity:1; transform:translateY(0); }
 
 /* Tiny animations */
-@keyframes floaty {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+@keyframes floaty{ 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
 
-/* Utility */
-.object-fit-cover {
-  object-fit: cover;
-}
-.lh-tight {
-  line-height: 1.15;
-}
-.fw-extrabold {
-  font-weight: 800 !important;
-}
-.tracking-wide {
-  letter-spacing: 0.02em;
-}
+/* Utilities actually used */
+.lh-tight{ line-height:1.15; }
+.fw-extrabold{ font-weight:800 !important; }
+.tracking-wide{ letter-spacing:.02em; }
+.backdrop-blur{ backdrop-filter: blur(6px); }
+.bg-white-75{ background:rgba(255,255,255,.75); }
+.bg-white-80{ background:rgba(255,255,255,.80); }
 
-/* Subtle backdrop blur support class (non-critical) */
-.backdrop-blur {
-  backdrop-filter: blur(6px);
-}
-.bg-white-75 {
-  background: rgba(255, 255, 255, 0.75);
-}
-.bg-white-80 {
-  background: rgba(255, 255, 255, 0.8);
-}
+/* =========================
+   Route Map — 4 steps
+   ========================= */
+.route-section{ overflow-x:hidden; }
 
-/* ===== Route Map — 4 steps, centered, premium look ===== */
-
-/* keep section from scrolling sideways if arrows overlap */
-.route-section {
-  overflow-x: hidden;
-}
-
-/* Grid: responsive on small; perfect single row on xl+ */
-.steps-grid {
-  display: grid;
-  gap: clamp(20px, 2.4vw, 36px);
+.steps-grid{
+  display:grid; gap:clamp(20px, 2.4vw, 36px);
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  align-items: stretch;
-  max-width: 1200px; /* center inside container */
-  margin-inline: auto;
+  align-items:stretch; max-width:1200px; margin-inline:auto;
+}
+@media (min-width:1200px){
+  .steps-grid{ grid-template-columns:repeat(4, 1fr); column-gap:50px; }
 }
 
-/* XL and up: force 4 equal columns (single row) */
-@media (min-width: 1200px) {
-  .steps-grid {
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 50px; /* room for arrows */
+.step-card{
+  position:relative; border:1px solid var(--border); border-radius:20px;
+  background:#fffffff2; backdrop-filter: blur(6px);
+  box-shadow:0 4px 18px rgba(1,51,105,.06);
+  padding:28px 24px; min-height:280px;
+  display:flex; flex-direction:column; justify-content:flex-start;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.step-card::before{
+  content:""; position:absolute; inset:-1px 0 auto 0; height:4px; border-radius:20px 20px 0 0;
+  background:linear-gradient(90deg, var(--primary), #fff 50%, var(--secondary));
+}
+.step-card:hover{ transform: translateY(-3px); box-shadow:0 12px 32px rgba(1,51,105,.12); border-color:rgba(1,51,105,.2); }
+
+.step-head{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.step-number{
+  width:36px; height:36px; border-radius:10px; background:var(--primary); color:#fff;
+  display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;
+  box-shadow:0 2px 6px rgba(0,0,0,.12);
+}
+.step-icon{
+  width:44px; height:44px; border-radius:12px; display:inline-flex; align-items:center; justify-content:center;
+  font-size:20px; background:rgba(1,51,105,.06); color:var(--accent);
+}
+.step-title{ color:var(--accent); font-weight:800; font-size:1.35rem; line-height:1.2; margin:10px 0 8px; }
+.step-desc{ color:#475569; font-size:1rem; line-height:1.5; margin:0; }
+
+@media (min-width:1200px){
+  .step-card{ overflow:visible; }
+  .step-card:not(:last-child)::after{
+    content:"→"; position:absolute; right:-32px; top:50%; transform:translateY(-50%);
+    font-size:40px; color:var(--accent); opacity:.6; pointer-events:none;
   }
 }
-
-/* Card visuals */
-.step-card {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: #fffffff2;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 18px rgba(1, 51, 105, 0.06);
-  padding: 28px 24px;
-  min-height: 280px; /* ↑ larger, consistent height */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-/* subtle saffron-green accent strip on top */
-.step-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px 0 auto 0;
-  height: 4px;
-  border-radius: 20px 20px 0 0;
-  background: linear-gradient(
-    90deg,
-    var(--primary),
-    #fff 50%,
-    var(--secondary)
-  );
-}
-.step-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(1, 51, 105, 0.12);
-  border-color: rgba(1, 51, 105, 0.2);
+@media (min-width:1600px){
+  .step-card{ min-height:300px; padding:32px 26px; }
+  .step-title{ font-size:1.4rem; }
 }
 
-/* Header (number + icon) */
-.step-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+/* =========================
+   Rolling Icons (10 logos × 2)
+   ========================= */
+:root{
+  --icon-size: 72px;      /* main icon size */
+  --icon-gap: 48px;       /* space between items */
+  --icon-radius: 16px;
+  --icon-speed: 24s;      /* lower = faster */
+  --icon-border: #d1d5db;
+  --icon-shadow: 0 2px 8px rgba(1,51,105,.06);
+  --icon-shadow-hover: 0 10px 22px rgba(1,51,105,.10);
 }
-.step-number {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--primary);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+@media (max-width:992px){ :root{ --icon-size:64px; --icon-gap:36px; } }
+@media (max-width:576px){ :root{ --icon-size:56px; --icon-gap:28px; } }
+
+.rolling-wrapper{ overflow:hidden; width:100%; position:relative; user-select:none; padding-block:6px; }
+.rolling-track{
+  display:flex; align-items:center; gap:var(--icon-gap);
+  width:max-content; animation: rollIcons var(--icon-speed) linear infinite; will-change: transform;
 }
-.step-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  background: rgba(1, 51, 105, 0.06);
-  color: var(--accent);
-  /* your custom color (optional) */
-  /* background-color: rgba(38,146,38,.68); color:#fff; */
+.rolling-wrapper:hover .rolling-track{ animation-play-state: paused; }
+
+@keyframes rollIcons{
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); } /* needs duplicated set */
 }
 
-/* Title & text */
-.step-title {
-  color: var(--accent);
-  font-weight: 800;
-  font-size: 1.35rem;
-  line-height: 1.2;
-  margin: 10px 0 8px;
+.icon-box{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:calc(var(--icon-size) + 24px); height:calc(var(--icon-size) + 24px);
+  border-radius:var(--icon-radius); background:#ffffffd9; backdrop-filter: blur(6px);
+  border:1px solid var(--icon-border); box-shadow:var(--icon-shadow);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.step-desc {
-  color: #475569;
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 0;
-}
+.icon-box:hover{ transform: translateY(-3px); box-shadow:var(--icon-shadow-hover); border-color:rgba(1,51,105,.25); background:#fff; }
 
-/* Arrows between cards on xl+ only, kept inside grid */
-@media (min-width: 1200px) {
-  .step-card {
-    overflow: visible;
-  }
-  .step-card:not(:last-child)::after {
-    content: "→";
-    position: absolute;
-    right: -32px; /* sits in the gap, no overflow */
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 40px;
-    color: var(--accent);
-    opacity: 0.6;
-    pointer-events: none;
-  }
-}
-
-/* Hide arrows when wrapping (< xl) */
-@media (max-width: 1199.98px) {
-  .step-card::after {
-    display: none;
-  }
-}
-
-/* Huge screens: a touch bigger */
-@media (min-width: 1600px) {
-  .step-card {
-    min-height: 300px;
-    padding: 32px 26px;
-  }
-  .step-title {
-    font-size: 1.4rem;
-  }
-}
-
-/* ===== Rolling Icons (for your 10 custom icons) ===== */
-:root {
-  --icon-size: 72px; /* main icon size */
-  --icon-gap: 48px; /* space between items */
-  --icon-radius: 16px; /* card corner radius */
-  --icon-speed: 24s; /* lower = faster */
-  --icon-border: #d1d5db; /* subtle border */
-  --icon-shadow: 0 2px 8px rgba(1, 51, 105, 0.06);
-  --icon-shadow-hover: 0 10px 22px rgba(1, 51, 105, 0.1);
-}
-
-@media (max-width: 992px) {
-  :root {
-    --icon-size: 64px;
-    --icon-gap: 36px;
-  }
-}
-@media (max-width: 576px) {
-  :root {
-    --icon-size: 56px;
-    --icon-gap: 28px;
-  }
-}
-
-/* ----- Wrapper (viewport) ----- */
-.rolling-wrapper {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  user-select: none;
-  padding-block: 6px; /* slight breathing room */
-}
-
-/* ----- Track (the moving row) ----- */
-.rolling-track {
-  display: flex;
-  align-items: center;
-  gap: var(--icon-gap);
-  width: max-content; /* prevents wrapping; fits content width */
-  animation: rollIcons var(--icon-speed) linear infinite;
-  will-change: transform;
-}
-
-/* Pause on hover (nice UX) */
-.rolling-wrapper:hover .rolling-track {
-  animation-play-state: paused;
-}
-
-/* Seamless loop:
-   MUST have two identical sets of icons in the HTML.
-   We move exactly half the track width. */
-@keyframes rollIcons {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* ----- Each icon tile (card) ----- */
-.icon-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(var(--icon-size) + 24px);
-  height: calc(var(--icon-size) + 24px);
-  border-radius: var(--icon-radius);
-  background: #ffffffd9; /* translucent white for glassy feel */
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--icon-border);
-  box-shadow: var(--icon-shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.icon-box:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--icon-shadow-hover);
-  border-color: rgba(1, 51, 105, 0.25);
-  background: #fff; /* solid on hover */
-}
-
-/* ----- The icon image itself ----- */
-.icon-img {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  object-fit: contain; /* keeps aspect ratio */
-  image-rendering: -webkit-optimize-contrast;
-  -webkit-user-drag: none;
-  user-select: none;
-  pointer-events: none; /* icons don’t intercept pointer */
+.icon-img{
+  width:var(--icon-size); height:var(--icon-size); object-fit:contain;
+  image-rendering:-webkit-optimize-contrast; -webkit-user-drag:none; user-select:none; pointer-events:none;
 }

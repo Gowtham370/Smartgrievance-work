@@ -17,9 +17,7 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 reveals.forEach(el => io.observe(el));
 
-// Bootstrap carousel is configured via data attributes in HTML:
-// data-bs-ride="carousel" data-bs-interval="3500" data-bs-pause="hover"
-// No extra JS needed for autoplay/pause/controls.
+
 
 // Optional: Smooth scroll for in-page links (enhanced)
 document.querySelectorAll('a[href^="#"]').forEach(a => {
