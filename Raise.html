@@ -4,182 +4,237 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Raise a Complaint</title>
-
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
   <style>
-    #map {
-      height: 350px;
-      border-radius: 0.5rem;
-    }
-    #preview {
-      width: 100%;
-      max-height: 250px;
-      object-fit: cover;
-      border-radius: 0.5rem;
-    }
+    #map { height: 350px; border-radius: 0.5rem; }
+    #preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 0.5rem; }
+    #cameraContainer video { width: 100%; border-radius: 0.5rem; }
+    #cameraContainer { display: none; }
   </style>
 </head>
 <body class="bg-light">
+<div class="container py-5">
 
-  <div class="container py-5">
-    <h2 class="text-center text-primary fw-bold mb-4">Raise a Complaint</h2>
+  <h2 class="text-center text-primary fw-bold mb-4">Raise a Complaint</h2>
 
-    <div class="card shadow-sm border-0 rounded-4 p-4">
-      <div class="row g-4 align-items-start justify-content-center">
+  <div class="card shadow-sm border-0 rounded-4 p-4">
+    <div class="row g-4">
 
-        <!-- Left: Form -->
-        <div class="col-md-6">
-          <form id="complaintForm" class="needs-validation" novalidate>
-            
-            <!-- Upload Image -->
-            <div class="mb-3">
-              <label for="photoInput" class="form-label fw-semibold">Upload Image</label>
-              <input type="file" id="photoInput" accept="image/*" class="form-control mb-2" required />
-              <img id="preview" src="" alt="Preview" class="d-none mb-2 img-fluid" />
-            </div>
+      <!-- LEFT SIDE -->
+      <div class="col-md-6">
 
-            <!-- Short Description -->
-            <div class="mb-3">
-              <label for="description" class="form-label fw-semibold">Short Description</label>
-              <textarea id="description" class="form-control" rows="2" placeholder="Write a short description..." style="resize: none;"></textarea>
-            </div>
+        <form id="complaintForm">
 
-            <!-- Manual or Auto Location Input -->
-            <div class="mb-3">
-              <label for="manualLocation" class="form-label fw-semibold">Location</label>
-              <input type="text" id="manualLocation" class="form-control" placeholder="Your location" required />
-              <div class="form-text">If location access is denied, please type it manually.</div>
-            </div>
+          <!-- Upload Image -->
+          <label class="fw-semibold mb-2" aria-required="false">Upload Image</label>
 
-            <!-- Submit Button -->
-            <div class=" mt-4">
+          <div class="d-flex gap-2 mb-3">
+            <button type="button" id="fileBtn" class="btn btn-primary btn-sm">Choose a File</button>
+            <img src="./assets/camera.png" alt="cameraimage" width="30px" id="cameraBtn" style="cursor: pointer;">
+          </div>
+
+          <input type="file" id="photoInput" accept="image/*" class="d-none">
+
+          <div id="cameraContainer" class="mb-3">
+            <video id="camera" autoplay></video>
+            <button type="button" id="captureBtn" class="btn btn-danger btn-sm mt-2">Capture Photo</button>
+          </div>
+
+          <img id="preview" class="d-none mb-3" />
+
+          <!-- Description -->
+          <label class="fw-semibold">Short Description</label>
+          <textarea id="description" class="form-control mb-3" rows="2" style="resize: none;"></textarea>
+
+          <!-- Location -->
+          <label class="fw-semibold">Location</label>
+          <input type="text" id="manualLocation" class="form-control mb-2" placeholder="Type location..." required />
+          <small class="text-muted">If location access is denied, please type it manually.</small>
+
+          <!-- Submit -->
+          <div class=" mt-4">
               <button type="submit" class="btn btn-success">Submit Complaint</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Right: Map -->
-        <div class="col-md-6">
-          <div id="map" class="w-100 shadow-sm"></div>
-        </div>
-
+            </div
+        </form>
       </div>
+
+      <!-- MAP -->
+      <div class="col-md-6">
+        <div id="map" class="w-100 shadow-sm"></div>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-  <script>
-    let map, marker, typingTimeout;
+<script>
+  let map, marker, typingTimeout;
+  let cameraStream = null;
 
-    // Initialize map (default India)
-    function initMap() {
-      map = L.map("map").setView([20.5937, 78.9629], 5);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 18,
-      }).addTo(map);
+  //Leaflet map centered on India 
+  function initMap() {
+    map = L.map("map").setView([20.5937, 78.9629], 5);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+  }
 
-      // Click on map → place marker + get address
-      map.on("click", (e) => {
-        const { lat, lng } = e.latlng;
-        showMarker(lat, lng);
-        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-          .then((res) => res.json())
-          .then((data) => {
-            const address = data.display_name || `${lat}, ${lng}`;
-            document.getElementById("manualLocation").value = address;
-          });
-      });
+  // Marker Function
+  function showMarker(lat, lng, popup = "") {
+    if (!marker) marker = L.marker([lat, lng]).addTo(map);
+    else marker.setLatLng([lat, lng]);
+
+    if (popup) marker.bindPopup(popup).openPopup();
+
+    map.setView([lat, lng], 14);
+  }
+
+  // Automatic Location (GPS)
+  function getUserLocation() {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("manualLocation").value = data.display_name;
+          showMarker(lat, lng, "Your Location");
+        });
+    });
+  }
+
+  // File Upload Button
+  document.getElementById("fileBtn").addEventListener("click", () => {
+    stopCamera();
+    document.getElementById("cameraContainer").style.display = "none";
+    document.getElementById("photoInput").click();
+  });
+
+  // File Selected → Preview
+  document.getElementById("photoInput").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      preview.src = ev.target.result;
+      preview.classList.remove("d-none");
+    };
+    reader.readAsDataURL(file);
+
+    getUserLocation();
+  });
+
+  // Open Camera
+  document.getElementById("cameraBtn").addEventListener("click", async () => {
+    document.getElementById("cameraContainer").style.display = "block";
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      document.getElementById("camera").srcObject = cameraStream;
+    } catch (err) {
+      alert("Camera blocked!");
     }
+  });
 
-    // Get user location
-    function getUserLocation() {
-      if (!navigator.geolocation) {
-        alert("Geolocation not supported. Please enter location manually.");
-        return;
-      }
+  // Capture Photo from Camera
+  document.getElementById("captureBtn").addEventListener("click", () => {
+    const video = document.getElementById("camera");
+    const canvas = document.createElement("canvas");
 
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude: lat, longitude: lng } = pos.coords;
-          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-            .then((res) => res.json())
-            .then((data) => {
-              const address = data.display_name || "Unknown location";
-              document.getElementById("manualLocation").value = address;
-              showMarker(lat, lng, "📍 Your Location");
-            });
-        },
-        () => alert("⚠️ Location access denied. Please enter it manually."),
-        { enableHighAccuracy: true, timeout: 10000 }
-      );
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    canvas.getContext("2d").drawImage(video, 0, 0);
+
+    const dataUrl = canvas.toDataURL("image/png");
+    preview.src = dataUrl;
+    preview.classList.remove("d-none");
+
+    stopCamera();
+    document.getElementById("cameraContainer").style.display = "none";
+
+    getUserLocation();
+  });
+
+  // Stop Camera
+  function stopCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(t => t.stop());
+      cameraStream = null;
     }
+  }
 
-    // Show marker on map
-    function showMarker(lat, lng, popupText = "") {
-      if (!marker) {
-        marker = L.marker([lat, lng]).addTo(map);
-      } else {
-        marker.setLatLng([lat, lng]);
-      }
-      if (popupText) marker.bindPopup(popupText).openPopup();
-      map.setView([lat, lng], 14);
-    }
+  //  Live Map Update When Typing Location
+  document.getElementById("manualLocation").addEventListener("input", () => {
+    const text = manualLocation.value.trim();
+    if (text.length < 3) return;
 
-    // Typing location → search map
-    document.getElementById("manualLocation").addEventListener("input", async (e) => {
-      const text = e.target.value.trim();
-      if (text.length < 3) return;
-      clearTimeout(typingTimeout);
-      typingTimeout = setTimeout(async () => {
-        try {
-          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text)}`);
-          const data = await res.json();
-          if (data.length > 0) {
-            const { lat, lon, display_name } = data[0];
-            showMarker(lat, lon, display_name);
-          }
-        } catch (err) {
-          console.error(err);
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(async () => {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text)}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.length > 0) {
+          const { lat, lon, display_name } = data[0];
+          showMarker(lat, lon, display_name);
         }
-      }, 600);
-    });
-
-    // Image preview + location auto-detect
-    document.getElementById("photoInput").addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      const preview = document.getElementById("preview");
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          preview.src = ev.target.result;
-          preview.classList.remove("d-none");
-        };
-        reader.readAsDataURL(file);
-        getUserLocation();
+      } catch (err) {
+        console.error(err);
       }
-    });
+    }, 500);
+  });
 
-    // Submit form
-    document.getElementById("complaintForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const location = document.getElementById("manualLocation").value.trim();
-      if (!location) return alert("Please provide a location.");
-      alert("✅ Complaint submitted successfully!");
-      const savedLocation = location;
-      e.target.reset();
-      document.getElementById("preview").classList.add("d-none");
-      document.getElementById("manualLocation").value = savedLocation;
-    });
+  // Submit Form
+document.getElementById("complaintForm").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    window.onload = initMap;
-  </script>
+  const description = document.getElementById("description").value.trim();
+  const location = document.getElementById("manualLocation").value.trim();
+  const fileInput = document.getElementById("photoInput");
+  const previewSrc = document.getElementById("preview").src;
+
+  const hasUploaded = fileInput.files.length > 0; 
+  const hasCaptured = previewSrc && previewSrc.startsWith("data:image");
+
+  // Image Check
+  if (!hasUploaded && !hasCaptured) {
+    alert("Please upload an image or capture a photo.");
+    return;
+  }
+
+  // Choose final image
+  let finalImage = hasUploaded ? fileInput.files[0] : previewSrc;
+
+  const complaintData = {
+    description: description,
+    location: location,
+    image: finalImage, 
+  };
+
+  console.log("FORM DATA:", complaintData);
+
+  alert("Complaint Submitted Successfully!");
+
+  // Reset
+  document.getElementById("complaintForm").reset();
+  document.getElementById("preview").classList.add("d-none");
+});
+
+
+  window.onload = initMap;
+</script>
+
 </body>
 </html>
