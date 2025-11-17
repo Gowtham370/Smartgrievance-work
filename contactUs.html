@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us - Query Form</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+    <style>
+      body {
+        background-color: #f5f7fa;
+      }
+
+      .Query-form,
+      .contact-info {
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+      }
+
+      h2 {
+        color: #004aad;
+        font-weight: 600;
+      }
+
+      #combinedMap {
+        height: 350px;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .map-section {
+        background: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+      /* ===== Government Footer ===== */
+.gov-footer {
+  background: #0c1e3c;    /* deep navy like Indian govt sites */
+  border-top: 4px solid var(--primary);
+}
+
+.footer-title {
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 6px;
+}
+
+.footer-list a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.footer-list a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  background: #0a172e;
+  font-size: 0.85rem;
+  color: #d1d5db;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+/* =======================
+   SUPPORT CTA SECTION
+   ======================= */
+.support-section {
+  background: linear-gradient(
+    90deg,
+    var(--accent),   /* Navy */
+    var(--secondary) /* Indian Green */
+  );
+  color: #fff;
+  border-top: 4px solid var(--primary); /* Saffron accent */
+}
+
+.support-title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.support-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* CTA Button */
+.support-btn {
+  padding: .75rem 1.6rem;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid var(--primary);
+  text-decoration: none;
+  transition: 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.support-btn:hover {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+
+    </style>
+  </head>
+
+  <body>
+
+    <!-- navbar -->
+
+    <!-- Contact-US -->
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Query Form -->
+        <div class="col-lg-6 col-md-12">
+          <div class="Query-form h-100">
+            <h2 class="text-center mb-4">Query Form</h2>
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" placeholder="Enter your full name" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" placeholder="Enter your e-mail" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Enter your phone Number" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="4" placeholder="Enter your query" style="resize: none"></textarea> 
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Attachment</label>
+                <input class="form-control" type="file" />
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary mt-3" type="submit"> Submit form </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+          <!-- Contact Info + Map -->
+          <div class="h-100">
+            <div class="contact-info mb-4">
+              <h2 class="text-center mb-3">Our Office Details</h2>
+              <p>
+                <strong>📍 Address:</strong>
+                Satyabama Complex, 301, KPHB Main Rd, Opp. Sai Baba Temple,
+                Bhagya Nagar Colony, Hyderabad, Telangana 500085
+              </p>
+              <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+              <p><strong>✉️ Email:</strong> info@company.com</p>
+            </div>
+            <div class="map-section">
+              <div id="combinedMap"></div>
+              <div class="text-center mt-3 d-flex flex-wrap justify-content-center gap-3">
+                <button id="getLocationBtn" class="btn btn-primary">📍 Get Directions</button>
+                <button id="resetMapBtn" class="btn btn-secondary">🔄 Reset Map</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<section id="support" class="support-section py-5">
+  <div class="container-lg d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4">
+
+    <!-- Text -->
+    <div>
+      <h2 class="support-title mb-2">Need Support</h2>
+      <p class="support-subtitle mb-0">Reach out to us — we’ll be happy to help you!</p>
+    </div>
+
+    <!-- Button -->
+    <a href="#contact" class="support-btn">
+      Contact Us <i class="bi bi-arrow-up-right"></i>
+    </a>
+
+  </div>
+</section>
+
+    <!-- footer -->
+<footer class="gov-footer text-light mt-5">
+  <div class="container py-5">
+
+    <div class="row gy-4">
+
+      <!-- COLUMN 1 -->
+      <div class="col-12 col-md-4">
+        <h5 class="footer-title">Quick Links</h5>
+        <ul class="footer-list">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Raise Complaint</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 2 -->
+      <div class="col-12 col-md-4">
+        <h5 class="footer-title">Important Links</h5>
+        <ul class="footer-list">
+          <li><a href="#">Assam State Portal</a></li>
+          <li><a href="#">CM Portal</a></li>
+          <li><a href="#">RTPS State Commission</a></li>
+          <li><a href="#">Right to Information</a></li>
+          <li><a href="#">National Portal of India</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 3 -->
+      <div class="col-12 col-md-4">
+        <h5 class="footer-title">Site Info</h5>
+        <ul class="footer-list">
+          <li><a href="#">Sitemap</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+
+        <div class="mt-3 small">
+          <div>Last Updated: <span id="lastUpdated"></span></div>
+          <div>Total Visitors: <strong id="visitorCount">1,24,567</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom text-center py-3 mt-4">
+    © 2025 SevaSetu — Government Service Portal
+  </div>
+</footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+      const officeCoords = [17.49396, 78.40084];
+      const map = L.map("combinedMap").setView(officeCoords, 15);
+
+      // Tile Layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Office Marker
+      const officeIcon = L.divIcon({
+        html: '<div style="background-color: #e74c3c; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">📍</div>',
+        className: "office-marker",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+
+      const officeMarker = L.marker(officeCoords, { icon: officeIcon })
+        .addTo(map)
+        .bindPopup("<b>Our Office</b><br>Hyderabad, Telangana.")
+        .openPopup();
+
+      // Get Directions
+      document
+        .getElementById("getLocationBtn")
+        .addEventListener("click", () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+              const userCoords = [pos.coords.latitude, pos.coords.longitude];
+              L.marker(userCoords)
+                .addTo(map)
+                .bindPopup("<b>Your Location</b>")
+                .openPopup();
+              L.polyline([userCoords, officeCoords], {
+                color: "#3498db",
+                weight: 4,
+                dashArray: "5,10",
+              }).addTo(map);
+              map.fitBounds([userCoords, officeCoords]);
+            });
+          } else {
+            alert("Geolocation not supported by your browser.");
+          }
+        });
+
+      // Reset Map
+      document.getElementById("resetMapBtn").addEventListener("click", () => {
+        map.setView(officeCoords, 15);
+      });
+      
+  document.getElementById("lastUpdated").innerText =
+    new Date().toLocaleDateString();
+
+
+    </script>
+  </body>
+</html>
