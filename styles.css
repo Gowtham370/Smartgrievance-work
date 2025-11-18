@@ -27,6 +27,113 @@
   align-items: center;
   width: 100%;
 }
+/* --- SmartSeva highlight section --- */
+
+#smartseva-highlight {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* left text block */
+.highlight-text p {
+  font-size: 0.98rem;
+}
+
+/* right carousel card */
+.highlight-card {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffffee;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.highlight-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.highlight-card-body {
+  padding: 14px 16px 16px;
+}
+
+.highlight-title {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.highlight-desc {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* carousel controls tweak to match theme a bit */
+#smartsevaCards .carousel-control-prev-icon,
+#smartsevaCards .carousel-control-next-icon {
+  filter: invert(25%) sepia(20%) saturate(800%) hue-rotate(180deg);
+}
+
+#smartsevaCards .carousel-control-prev,
+#smartsevaCards .carousel-control-next {
+  width: 8%;
+}
+
+/* small screens: stack nicely */
+@media (max-width: 767.98px) {
+  .highlight-img {
+    height: 210px;
+  }
+}
+.issue-card {
+  background: #ffffffdd;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 12px;
+  text-align: center;
+  transition: .3s ease;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.issue-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 12px 28px rgba(1, 51, 105, 0.15);
+  border-color: rgba(1, 51, 105, 0.3);
+}
+
+.issue-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.issue-card h4 {
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.issue-card p {
+  font-size: 0.92rem;
+  color: #475569;
+}
+
+/* carousel controls theme-colored */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(22%) sepia(90%) saturate(400%) hue-rotate(180deg);
+}
+
 
 /* left: brand */
 /* .nav-left {
@@ -93,6 +200,7 @@ nav.navbar .container-fluid {
   max-width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
+  
 }
 
 /* =========================

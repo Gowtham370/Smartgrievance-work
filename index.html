@@ -37,13 +37,13 @@
       <!-- CENTER: main links (desktop only) -->
       <div class="nav-center d-none d-md-flex mx-auto">
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./aboutus.html">About Us</a></li>
           <li class="nav-item">
-            <a class="btn btn-primary px-3 py-1" href="#raise">Raise Complaint</a>
+            <a class="btn btn-primary px-3 py-1" href="./Raise.html">Raise Complaint</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="#analytics">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="./dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contactUs.html">Contact Us</a></li>
         </ul>
       </div>
 
@@ -140,97 +140,340 @@
       </div>
     </div>
   </section>
+  <!-- SMARTSEVA HIGHLIGHT SECTION -->
+<section id="smartseva-highlight" class="py-5">
+  <div class="container-lg">
 
-  <!-- AIM OF SMARTSEVA -->
-  <section id="aim" class="aim-section py-5">
-    <div class="container-lg px-3">
-
-      <div class="text-center mb-4 reveal">
-        <h2 class="h1 fw-extrabold brand-text">Our Aim</h2>
-        <p class="text-body-secondary fs-5 mt-2">
-          SmartSeva ensures every citizen’s voice is heard, every issue is acknowledged,
-          and every complaint is acted upon with transparency.
-        </p>
+    <div class="row g-4 align-items-center">
+      
+      <!-- LEFT SIDE: Text -->
+      <div class="col-lg-5 col-md-6">
+        <div class="highlight-text reveal">
+          <h2 class="h2 fw-extrabold brand-text mb-3">How SmartSeva Helps You</h2>
+          <p class="text-body-secondary mb-3">
+            SmartSeva makes it simple to report local issues like garbage overflow, road damage,
+            water leakage, child labour and unsafe electrical setups – all from one place.
+          </p>
+          <ul class="list-unstyled mb-3 text-body-secondary">
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              Raise complaints in under a minute with photos and location.
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              Track status, timelines and department responses in one dashboard.
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              AI helps flag critical issues faster so action is not delayed.
+            </li>
+          </ul>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#raise" class="btn btn-primary btn-sm px-3">Raise Complaint</a>
+            <a href="#about" class="btn btn-outline-theme btn-sm px-3">Learn More</a>
+          </div>
+        </div>
       </div>
 
-      <div class="row g-4 justify-content-center">
+      <!-- RIGHT SIDE: Card Carousel -->
+      <div class="col-lg-7 col-md-6">
+        <div id="smartsevaCards" class="carousel slide reveal" data-bs-ride="carousel">
+          
+          <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-1.jpg" class="highlight-img" alt="Issue example 1">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Garbage Overflow</h5>
+                  <p class="highlight-desc mb-0">
+                    Residents used SmartSeva to report unattended garbage, leading to route
+                    corrections and cleaner streets.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-2.jpg" class="highlight-img" alt="Issue example 2">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Damaged Roads</h5>
+                  <p class="highlight-desc mb-0">
+                    Potholes and broken roads were flagged with photos, prompting timely repair work.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-3.jpg" class="highlight-img" alt="Issue example 3">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Water Leakage</h5>
+                  <p class="highlight-desc mb-0">
+                    Pipeline leakages were reported early, reducing water wastage and road damage.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#smartsevaCards" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#smartsevaCards" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section id="issues-carousel" class="py-5 bg-white-80">
+  <div class="container-lg px-3">
+
+    <div class="text-center mb-4">
+      <h2 class="h2 fw-extrabold brand-text">Major Issues Faced by Citizens</h2>
+      <p class="text-body-secondary">SmartSeva identifies and addresses real-world civic challenges.</p>
+    </div>
+
+    <div id="issuesMulti" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4200">
+
+      <div class="carousel-inner">
+
+        <!-- ========== SLIDE 1 ========== -->
+        <div class="carousel-item active">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/garbage.jpg" class="issue-img">
+                <h4>Overflowing Garbage</h4>
+                <p>Waste accumulation causes smell, mosquito breeding & health hazards.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/potholes.jpg" class="issue-img">
+                <h4>Potholes & Damaged Roads</h4>
+                <p>Common cause of accidents and major traffic slowdowns.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/leakage.jpg" class="issue-img">
+                <h4>Water Leakage</h4>
+                <p>Leads to water wastage and weakens road structures.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========== SLIDE 2 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/powercut.jpg" class="issue-img">
+                <h4>Power Cuts</h4>
+                <p>Affects households, students and businesses.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/drainage.jpg" class="issue-img">
+                <h4>Open / Blocked Drains</h4>
+                <p>Cause foul smell, mosquito growth & flooding.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/childlabour.jpg" class="issue-img">
+                <h4>Child Labour</h4>
+                <p>Children in labour lose education and face long-term issues.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========== SLIDE 3 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/streetlight.jpg" class="issue-img">
+                <h4>Non-Functional Street Lights</h4>
+                <p>Dark areas increase crime and accidents.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/publictoilet.jpg" class="issue-img">
+                <h4>Dirty Public Toilets</h4>
+                <p>Causes hygiene issues and public discomfort.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/waterquality.jpg" class="issue-img">
+                <h4>Contaminated Water</h4>
+                <p>Dirty drinking water leads to serious infections.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========== SLIDE 4 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/footpath.jpg" class="issue-img">
+                <h4>Encroached Footpaths</h4>
+                <p>Forces people onto roads → dangerous for pedestrians.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/flooding.jpg" class="issue-img">
+                <h4>Waterlogging</h4>
+                <p>Happens due to blocked drains during monsoons.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/noise.jpg" class="issue-img">
+                <h4>Noise Pollution</h4>
+                <p>Honking, construction noise disturb day-to-day life.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========== SLIDE 5 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/burningwaste.jpg" class="issue-img">
+                <h4>Burning Waste</h4>
+                <p>Toxic smoke causes breathing issues and pollution.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/wires.jpg" class="issue-img">
+                <h4>Loose Electrical Wires</h4>
+                <p>High risk of fire and electrocution.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/strayanimals.jpg" class="issue-img">
+                <h4>Stray Animals</h4>
+                <p>Cause fear & frequent road accidents.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#issuesMulti" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#issuesMulti" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+  <!-- DEPT CATEGORY CARDS -->
+  <section id="dept-cards" class="py-5">
+    <div class="container-lg">
+
+      <div class="text-center mb-4">
+        <h3 class="h2 fw-extrabold brand-text">Report by Category</h3>
+        <p class="text-body-secondary">Choose a category and take quick action</p>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-4">
 
         <!-- Card 1 -->
-        <div class="col-md-4 col-sm-6 reveal">
-          <div class="aim-card glass-card h-100">
-            <div class="aim-icon">
-              <i class="bi bi-people"></i>
-            </div>
-            <h4 class="aim-title">Empower Citizens</h4>
-            <p class="aim-desc">
-              Provide a simple, accessible, and transparent way
-              for citizens to raise complaints and request services.
-            </p>
+        <div class="interactive-card" tabindex="0" data-cat="Garbage">
+          <div class="round-card">
+            <img src="./assets/garbage-round.jpg" class="round-img" alt="Garbage" />
+          </div>
+          <div class="card-caption">Garbage</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./garbage.html" class="btn-learn">Learn More</a>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="col-md-4 col-sm-6 reveal">
-          <div class="aim-card glass-card h-100">
-            <div class="aim-icon">
-              <i class="bi bi-lightning-charge"></i>
-            </div>
-            <h4 class="aim-title">Fast Redressal</h4>
-            <p class="aim-desc">
-              Use AI-powered prioritization to handle urgent complaints
-              efficiently and reduce response delays.
-            </p>
+        <div class="interactive-card" tabindex="0" data-cat="Roads">
+          <div class="round-card">
+            <img src="./assets/road-round.jpg" class="round-img" alt="Roads" />
+          </div>
+          <div class="card-caption">Roads</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./roads.html" class="btn-learn">Learn More</a>
           </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="col-md-4 col-sm-6 reveal">
-          <div class="aim-card glass-card h-100">
-            <div class="aim-icon">
-              <i class="bi bi-bar-chart"></i>
-            </div>
-            <h4 class="aim-title">Smarter Governance</h4>
-            <p class="aim-desc">
-              Give departments real-time analytics, helping authorities
-              identify problem-prone areas and improve city planning.
-            </p>
+        <div class="interactive-card" tabindex="0" data-cat="Child Labour">
+          <div class="round-card">
+            <img src="./assets/child-round1.jpg" class="round-img" alt="Child Labour" />
+          </div>
+          <div class="card-caption">Child Labour</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./child-labour.html" class="btn-learn">Learn More</a>
           </div>
         </div>
-
-        <!-- Card 4 -->
-        <div class="col-md-4 col-sm-6 reveal">
-          <div class="aim-card glass-card h-100">
-            <div class="aim-icon">
-              <i class="bi bi-shield-check"></i>
-            </div>
-            <h4 class="aim-title">Ensure Accountability</h4>
-            <p class="aim-desc">
-              Track every complaint from submission to resolution with
-              clear timelines, responsible officers, and status updates.
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="col-md-4 col-sm-6 reveal">
-          <div class="aim-card glass-card h-100">
-            <div class="aim-icon">
-              <i class="bi bi-hand-thumbs-up"></i>
-            </div>
-            <h4 class="aim-title">Build Public Trust</h4>
-            <p class="aim-desc">
-              Create a transparent communication channel between the
-              citizens and government to strengthen community trust.
-            </p>
-          </div>
-        </div>
-
       </div>
-
     </div>
   </section>
 
-  <!-- HOW IT WORKS / ROUTE MAP -->
+    <!-- HOW IT WORKS / ROUTE MAP -->
   <section id="how-it-works" class="py-5 bg-white route-section">
     <div class="container-lg px-3">
 
@@ -288,81 +531,6 @@
         <a href="#raise" class="btn btn-primary btn-lg px-4">Start Your Complaint</a>
       </div>
 
-    </div>
-  </section>
-
-  <!-- DEPT CATEGORY CARDS -->
-  <section id="dept-cards" class="py-5">
-    <div class="container-lg">
-
-      <div class="text-center mb-4">
-        <h3 class="h2 fw-extrabold brand-text">Report by Category</h3>
-        <p class="text-body-secondary">Choose a category and take quick action</p>
-      </div>
-
-      <div class="d-flex flex-wrap justify-content-center gap-4">
-
-        <!-- Card 1 -->
-        <div class="interactive-card" tabindex="0" data-cat="Garbage">
-          <div class="round-card">
-            <img src="./assets/garbage-round.jpg" class="round-img" alt="Garbage" />
-          </div>
-          <div class="card-caption">Garbage</div>
-          <div class="card-actions">
-            <a href="#raise" class="btn-raise">Raise Complaint</a>
-            <a href="#about" class="btn-learn">Learn More</a>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="interactive-card" tabindex="0" data-cat="Roads">
-          <div class="round-card">
-            <img src="./assets/road-round.jpg" class="round-img" alt="Roads" />
-          </div>
-          <div class="card-caption">Roads</div>
-          <div class="card-actions">
-            <a href="#raise" class="btn-raise">Raise Complaint</a>
-            <a href="#about" class="btn-learn">Learn More</a>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="interactive-card" tabindex="0" data-cat="Child Labour">
-          <div class="round-card">
-            <img src="./assets/child-round1.jpg" class="round-img" alt="Child Labour" />
-          </div>
-          <div class="card-caption">Child Labour</div>
-          <div class="card-actions">
-            <a href="#raise" class="btn-raise">Raise Complaint</a>
-            <a href="#about" class="btn-learn">Learn More</a>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="interactive-card" tabindex="0" data-cat="Leakage">
-          <div class="round-card">
-            <img src="./assets/pipe-rounnd.jpg" class="round-img" alt="Leakage" />
-          </div>
-          <div class="card-caption">Pipe Leakage</div>
-          <div class="card-actions">
-            <a href="#raise" class="btn-raise">Raise Complaint</a>
-            <a href="#about" class="btn-learn">Learn More</a>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="interactive-card" tabindex="0" data-cat="Electricity">
-          <div class="round-card">
-            <img src="./assets/electric.jpeg" class="round-img" alt="Electricity" />
-          </div>
-          <div class="card-caption">Electricity</div>
-          <div class="card-actions">
-            <a href="#raise" class="btn-raise">Raise Complaint</a>
-            <a href="#about" class="btn-learn">Learn More</a>
-          </div>
-        </div>
-
-      </div>
     </div>
   </section>
 
