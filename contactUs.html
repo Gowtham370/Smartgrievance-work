@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us - Query Form</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+    <style>
+      body {
+        background-color: #f5f7fa;
+      }
+
+      .Query-form,
+      .contact-info {
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+      }
+
+      h2 {
+        color: #004aad;
+        font-weight: 600;
+      }
+
+      #combinedMap {
+        height: 350px;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .map-section {
+        background: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- navbar -->
+
+    <!-- Contact-US -->
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Query Form -->
+        <div class="col-lg-6 col-md-12">
+          <div class="Query-form h-100">
+            <h2 class="text-center mb-4">Query Form</h2>
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" placeholder="Enter your full name" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" placeholder="Enter your e-mail" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Enter your phone Number" required/>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="4" placeholder="Enter your query" style="resize: none"></textarea> 
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Attachment</label>
+                <input class="form-control" type="file" />
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary mt-3" type="submit"> Submit form </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+          <!-- Contact Info + Map -->
+          <div class="h-100">
+            <div class="contact-info mb-4">
+              <h2 class="text-center mb-3">Our Office Details</h2>
+              <p>
+                <strong>📍 Address:</strong>
+                Satyabama Complex, 301, KPHB Main Rd, Opp. Sai Baba Temple,
+                Bhagya Nagar Colony, Hyderabad, Telangana 500085
+              </p>
+              <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+              <p><strong>✉️ Email:</strong> info@company.com</p>
+            </div>
+            <div class="map-section">
+              <div id="combinedMap"></div>
+              <div class="text-center mt-3 d-flex flex-wrap justify-content-center gap-3">
+                <button id="getLocationBtn" class="btn btn-primary">📍 Get Directions</button>
+                <button id="resetMapBtn" class="btn btn-secondary">🔄 Reset Map</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+      const officeCoords = [17.49396, 78.40084];
+      const map = L.map("combinedMap").setView(officeCoords, 15);
+
+      // Tile Layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Office Marker
+      const officeIcon = L.divIcon({
+        html: '<div style="background-color: #e74c3c; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">📍</div>',
+        className: "office-marker",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+
+      const officeMarker = L.marker(officeCoords, { icon: officeIcon })
+        .addTo(map)
+        .bindPopup("<b>Our Office</b><br>Hyderabad, Telangana.")
+        .openPopup();
+
+      // Get Directions
+      document
+        .getElementById("getLocationBtn")
+        .addEventListener("click", () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+              const userCoords = [pos.coords.latitude, pos.coords.longitude];
+              L.marker(userCoords)
+                .addTo(map)
+                .bindPopup("<b>Your Location</b>")
+                .openPopup();
+              L.polyline([userCoords, officeCoords], {
+                color: "#3498db",
+                weight: 4,
+                dashArray: "5,10",
+              }).addTo(map);
+              map.fitBounds([userCoords, officeCoords]);
+            });
+          } else {
+            alert("Geolocation not supported by your browser.");
+          }
+        });
+
+      // Reset Map
+      document.getElementById("resetMapBtn").addEventListener("click", () => {
+        map.setView(officeCoords, 15);
+      });
+    </script>
+  </body>
+</html>
