@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SevaSetu — Smart Grievance Portal</title>
+  <title>SmartSeva — Smart Grievance Portal</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,272 +22,884 @@
   <div id="scrollBar" class="scroll-watcher"></div>
 
   <!-- NAVBAR -->
- <nav class="navbar navbar-expand-md bg-white" >
-  <div class="container-fluid nav-inner">
+  <nav class="navbar navbar-expand-md navbar-light bg-white sticky-top">
+    <div class="container-fluid nav-inner">
 
-    <!-- LEFT → Brand -->
-    <div class="nav-left d-flex align-items-center">
-      <a class="navbar-brand brand-text fw-bold" href="#">
-        <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png" width="34" height="34" class="me-2">
-        SevaSetu
-      </a>
-    </div>
+      <!-- LEFT: Brand -->
+      <div class="nav-left d-flex align-items-center">
+        <a class="navbar-brand brand-text fw-bold d-flex align-items-center gap-2" href="#home">
+          <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
+               width="36" height="36" alt="logo" style="border-radius:8px;">
+          <span>SmartSeva</span>
+        </a>
+      </div>
 
-    <!-- CENTER → Nav links -->
-    <div class="nav-center justify-content-center flex-grow-1">
-      <ul class="navbar-nav gap-3 text-center mx-auto">
-        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
-        <li class="nav-item">
-          <a class="btn btn-primary px-3 py-1" href="#raise">Raise Complaint</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#analytics">Analytics</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
-      </ul>
-    </div>
-
-    <!-- RIGHT → Language + Profile -->
-    <div class="nav-right d-flex align-items-center gap-2">
-      <!-- Language dropdown -->
-      <div class="dropdown">
-        <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-          EN
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item">English</a></li>
-          <li><a class="dropdown-item">हिंदी</a></li>
-          <li><a class="dropdown-item">తెలుగు</a></li>
-          <li><a class="dropdown-item">தமிழ்</a></li>
+      <!-- CENTER: main links (desktop only) -->
+      <div class="nav-center d-none d-md-flex mx-auto">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="./aboutus.html">About Us</a></li>
+          <li class="nav-item">
+            <a class="btn btn-primary px-3 py-1" href="./Raise.html">Raise Complaint</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="./dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="./contactUs.html">Contact Us</a></li>
         </ul>
       </div>
 
-      <!-- Profile -->
-      <div class="dropdown">
-        <button class="btn btn-light dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-          <div class="rounded-circle bg-secondary text-white px-2">U</div>
+      <!-- RIGHT: language + profile (desktop) + toggler (mobile) -->
+      <div class="nav-right d-flex align-items-center gap-2">
+
+        <!-- desktop language + profile -->
+        <div class="d-none d-md-flex align-items-center gap-2">
+          <!-- Language -->
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              Language
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="en">English</button></li>
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="hi">हिंदी</button></li>
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="te">తెలుగు</button></li>
+            </ul>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="rounded d-inline-flex
+                          align-items-center justify-content-center"
+                   style="width:auto;height:34px;font-weight:700;">
+                Profile
+              </div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">View Profile</a></li>
+              <li><a class="dropdown-item" href="#">My Complaints</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- mobile toggler -->
+        <button class="navbar-toggler d-md-none" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mobileNav"
+                aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item">View Profile</a></li>
-          <li><a class="dropdown-item">My Complaints</a></li>
-          <li><hr></li>
-          <li><a class="dropdown-item text-danger">Logout</a></li>
+      </div>
+
+      <!-- MOBILE COLLAPSE -->
+      <div class="collapse navbar-collapse" id="mobileNav">
+        <ul class="navbar-nav d-md-none mobile-menu p-2 ms-auto">
+          <li class="nav-item"><a class="nav-link py-2" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link py-2" href="#about">About Us</a></li>
+          <li class="nav-item">
+            <a class="btn btn-primary w-100 mb-2" href="#raise">Raise Complaint</a>
+          </li>
+          <li class="nav-item"><a class="nav-link py-2" href="#analytics">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link py-2" href="#contact">Contact Us</a></li>
+
+          <li><hr class="dropdown-divider"></li>
+
+          <!-- Language (mobile) -->
+          <li class="px-2 text-muted small">Language</li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="en">English</button></li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="hi">हिंदी</button></li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="te">తెలుగు</button></li>
+
+          <li><hr class="dropdown-divider"></li>
+
+          <!-- Profile (mobile) -->
+          <li class="px-2 text-muted small">Profile</li>
+          <li><a class="dropdown-item" href="#">View Profile</a></li>
+          <li><a class="dropdown-item" href="#">My Complaints</a></li>
+          <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
         </ul>
       </div>
+
     </div>
+  </nav>
 
-    <!-- MOBILE -->
-    <button class="navbar-toggler ms-2" data-bs-toggle="collapse" data-bs-target="#mobileNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- HERO VIDEO SECTION -->
+  <section id="hero-video" class="position-relative w-100">
+    <!-- The video: autoplay, muted, loop, playsinline for mobile -->
+    <video id="heroVideo" class="video-bg" autoplay muted loop playsinline poster="./assets/video 2.mp4" aria-hidden="true">
+      <source src="./assets/video 2.mp4" type="video/webm">
+      <source src="./assets/video 2.mp4" type="video/mp4">
+      Your browser doesn't support HTML5 video.
+    </video>
 
-  </div>
-</nav>
+    <!-- Overlay (dark gradient + centered content) -->
+    <div class="hero-overlay d-flex align-items-center justify-content-center">
+      <div class="hero-content text-center text-white px-3">
+        <h1 class="hero-title mb-2">SevaSetu</h1>
+        <h6 class="hero-sub mb-3">A Smarter Way to Reach Your Government</h6>
+      </div>
+    </div>
+  </section>
+  <!-- SMARTSEVA HIGHLIGHT SECTION -->
+<section id="smartseva-highlight" class="py-5">
+  <div class="container-lg">
 
-
-  <!-- HERO -->
-  <header id="home" class="bg-white-75 border-bottom backdrop-blur">
-    <div class="container-fluid px-5 py-5 py-lg-5">
-      <div class="col-12 col-lg-7 reveal">
-        <span class="badge rounded-pill hero-badge">Citizen Service Portal</span>
-
-        <h1 class="display-5 fw-extrabold lh-tight brand-text mt-3 mb-1">SevaSetu</h1>
-
-        <h6 class="mt-2 fs-5 fw-medium text-secondary-emphasis tracking-wide  animate-fadeIn">
-          A Smarter Way to Reach Your Government
-        </h6>
-
-        <p class="lead mt-3 text-body-secondary">
-          Raise complaints with text or media. Our AI analyzes severity to prioritize urgent cases, while you track progress in real time.
-        </p>
-
-        <div class="d-flex gap-2 mt-3">
-          <a href="#raise" class="btn btn-primary btn-lg">Raise Complaint</a>
-          <a href="#about" class="btn btn-outline-theme btn-lg">Learn More</a>
+    <div class="row g-4 align-items-center">
+      
+      <!-- LEFT SIDE: Text -->
+      <div class="col-lg-5 col-md-6">
+        <div class="highlight-text reveal">
+          <h2 class="h2 fw-extrabold brand-text mb-3">How SmartSeva Helps You</h2>
+          <p class="text-body-secondary mb-3">
+            SmartSeva makes it simple to report local issues like garbage overflow, road damage,
+            water leakage, child labour and unsafe electrical setups – all from one place.
+          </p>
+          <ul class="list-unstyled mb-3 text-body-secondary">
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              Raise complaints in under a minute with photos and location.
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              Track status, timelines and department responses in one dashboard.
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle-fill me-2 text-success"></i>
+              AI helps flag critical issues faster so action is not delayed.
+            </li>
+          </ul>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#raise" class="btn btn-primary btn-sm px-3">Raise Complaint</a>
+            <a href="#about" class="btn btn-outline-theme btn-sm px-3">Learn More</a>
+          </div>
         </div>
       </div>
+
+      <!-- RIGHT SIDE: Card Carousel -->
+      <div class="col-lg-7 col-md-6">
+        <div id="smartsevaCards" class="carousel slide reveal" data-bs-ride="carousel">
+          
+          <div class="carousel-inner">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-1.jpg" class="highlight-img" alt="Issue example 1">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Garbage Overflow</h5>
+                  <p class="highlight-desc mb-0">
+                    Residents used SmartSeva to report unattended garbage, leading to route
+                    corrections and cleaner streets.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-2.jpg" class="highlight-img" alt="Issue example 2">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Damaged Roads</h5>
+                  <p class="highlight-desc mb-0">
+                    Potholes and broken roads were flagged with photos, prompting timely repair work.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+              <div class="highlight-card shadow-sm">
+                <img src="./assets/your-image-3.jpg" class="highlight-img" alt="Issue example 3">
+                <div class="highlight-card-body">
+                  <h5 class="highlight-title mb-1">Water Leakage</h5>
+                  <p class="highlight-desc mb-0">
+                    Pipeline leakages were reported early, reducing water wastage and road damage.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#smartsevaCards" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#smartsevaCards" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+        </div>
+      </div>
+
     </div>
-  </header>
-
-
-
-  <!-- CAROUSEL (single image, autoplay, pause on hover) -->
- 
-
-  <!-- HOW IT WORKS / ROUTE MAP -->
-<section id="how-it-works" class="py-5 bg-white route-section">
+  </div>
+</section>
+<section id="issues-carousel" class="py-5 bg-white-80">
   <div class="container-lg px-3">
 
-    <div class="text-center mb-4 reveal">
-      <h2 class="h1 fw-extrabold brand-text mb-2">How to Raise a Complaint</h2>
-      <p class="text-body-secondary mb-0">Follow these simple steps — it takes less than a minute.</p>
+    <div class="text-center mb-4">
+      <h2 class="h2 fw-extrabold brand-text">Major Issues Faced by Citizens</h2>
+      <p class="text-body-secondary">SmartSeva identifies and addresses real-world civic challenges.</p>
     </div>
 
-    <!-- Responsive grid -->
-    <div class="steps-grid">
+    <div id="issuesMulti" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4200">
 
-      <!-- Step 1 -->
-      <article class="step-card reveal">
-        <div class="step-head">
-          <span class="step-number">1</span>
-          <span class="step-icon"><i class="bi bi-buildings"></i></span>
+      <div class="carousel-inner">
+
+        <!-- ========== SLIDE 1 ========== -->
+        <div class="carousel-item active">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/garbage.jpg" class="issue-img">
+                <h4>Overflowing Garbage</h4>
+                <p>Waste accumulation causes smell, mosquito breeding & health hazards.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/potholes.jpg" class="issue-img">
+                <h4>Potholes & Damaged Roads</h4>
+                <p>Common cause of accidents and major traffic slowdowns.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/leakage.jpg" class="issue-img">
+                <h4>Water Leakage</h4>
+                <p>Leads to water wastage and weakens road structures.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h5 class="step-title">Choose Department</h5>
-        <p class="step-desc">Pick the correct category (Water, Roads, Electricity, etc.).</p>
-      </article>
 
-      <!-- Step 2 -->
-      <article class="step-card reveal">
-        <div class="step-head">
-          <span class="step-number">2</span>
-          <span class="step-icon"><i class="bi bi-pencil-square"></i></span>
+        <!-- ========== SLIDE 2 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/powercut.jpg" class="issue-img">
+                <h4>Power Cuts</h4>
+                <p>Affects households, students and businesses.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/drainage.jpg" class="issue-img">
+                <h4>Open / Blocked Drains</h4>
+                <p>Cause foul smell, mosquito growth & flooding.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/childlabour.jpg" class="issue-img">
+                <h4>Child Labour</h4>
+                <p>Children in labour lose education and face long-term issues.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h5 class="step-title">Describe Issue</h5>
-        <p class="step-desc">Write issue details clearly along with location.</p>
-      </article>
 
-      <!-- Step 3 -->
-      <article class="step-card reveal">
-        <div class="step-head">
-          <span class="step-number">3</span>
-          <span class="step-icon"><i class="bi bi-camera"></i></span>
+        <!-- ========== SLIDE 3 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/streetlight.jpg" class="issue-img">
+                <h4>Non-Functional Street Lights</h4>
+                <p>Dark areas increase crime and accidents.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/publictoilet.jpg" class="issue-img">
+                <h4>Dirty Public Toilets</h4>
+                <p>Causes hygiene issues and public discomfort.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/waterquality.jpg" class="issue-img">
+                <h4>Contaminated Water</h4>
+                <p>Dirty drinking water leads to serious infections.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h5 class="step-title">Upload Media</h5>
-        <p class="step-desc">Attach photo/video to support the complaint.</p>
-      </article>
 
-      <!-- Step 4 -->
-      <article class="step-card reveal">
-        <div class="step-head">
-          <span class="step-number">4</span>
-          <span class="step-icon"><i class="bi bi-ticket-perforated"></i></span>
+        <!-- ========== SLIDE 4 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/footpath.jpg" class="issue-img">
+                <h4>Encroached Footpaths</h4>
+                <p>Forces people onto roads → dangerous for pedestrians.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/flooding.jpg" class="issue-img">
+                <h4>Waterlogging</h4>
+                <p>Happens due to blocked drains during monsoons.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/noise.jpg" class="issue-img">
+                <h4>Noise Pollution</h4>
+                <p>Honking, construction noise disturb day-to-day life.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h5 class="step-title">Submit & Track</h5>
-        <p class="step-desc">Submit and monitor progress using your token.</p>
-      </article>
 
-    </div>
+        <!-- ========== SLIDE 5 ========== -->
+        <div class="carousel-item">
+          <div class="row g-4 justify-content-center">
 
-    <div class="text-center mt-4 reveal">
-      <a href="#raise" class="btn btn-primary btn-lg px-4">Start Your Complaint</a>
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/burningwaste.jpg" class="issue-img">
+                <h4>Burning Waste</h4>
+                <p>Toxic smoke causes breathing issues and pollution.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/wires.jpg" class="issue-img">
+                <h4>Loose Electrical Wires</h4>
+                <p>High risk of fire and electrocution.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="issue-card">
+                <img src="./assets/issues/strayanimals.jpg" class="issue-img">
+                <h4>Stray Animals</h4>
+                <p>Cause fear & frequent road accidents.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#issuesMulti" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#issuesMulti" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+
     </div>
 
   </div>
 </section>
 
 
-  <!-- ABOUT / FEATURES -->
-  <section id="about" class="py-5 bg-white-80 border-y backdrop-blur">
-    <div class="container-lg px-3">
-      <div class="col-12 col-lg-8">
-        <h2 class="h1 fw-extrabold brand-text reveal text-center">A bridge between citizens and governance</h2>
-        <p class="fs-5 text-body-secondary mt-3 reveal">
-          SevaSetu simplifies grievance redressal: citizens submit issues, our AI determines severity using NLP and image analysis,
-          and departments resolve faster with prioritized queues and clear SLAs.
-        </p>
+
+
+  <!-- DEPT CATEGORY CARDS -->
+  <section id="dept-cards" class="py-5">
+    <div class="container-lg">
+
+      <div class="text-center mb-4">
+        <h3 class="h2 fw-extrabold brand-text">Report by Category</h3>
+        <p class="text-body-secondary">Choose a category and take quick action</p>
       </div>
 
-      <div class="row g-4 mt-2">
-        <div class="col-md-4 reveal">
-          <div class="card h-100 border-theme">
-            <div class="card-body">
-              <div class="feature-number bg-primary text-white rounded-3 d-inline-flex align-items-center justify-content-center">1</div>
-              <h3 class="h5 mt-3 brand-text">Citizen-first</h3>
-              <p class="small text-body-secondary mb-0">Simple forms, media uploads, and live tracking keep citizens informed end-to-end.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 reveal">
-          <div class="card h-100 border-theme">
-            <div class="card-body">
-              <div class="feature-number bg-success text-white rounded-3 d-inline-flex align-items-center justify-content-center">2</div>
-              <h3 class="h5 mt-3 brand-text">AI Prioritization</h3>
-              <p class="small text-body-secondary mb-0">NLP + Vision models tag complaints, detect sentiment, and assign urgency.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 reveal">
-          <div class="card h-100 border-theme">
-            <div class="card-body">
-              <div class="feature-number bg-info text-white rounded-3 d-inline-flex align-items-center justify-content-center">3</div>
-              <h3 class="h5 mt-3 brand-text">Actionable Analytics</h3>
-              <p class="small text-body-secondary mb-0">Department-wise trends, SLA breaches, and area heatmaps fuel better decisions.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="d-flex flex-wrap justify-content-center gap-4">
 
-      <!-- Slim stats -->
-      <div id="analytics" class="row g-3 mt-4 reveal">
-        <div class="col-sm-4">
-          <div class="stat-tile shadow-sm">
-            <div class="stat-value">12,480+</div>
-            <div class="stat-label">Complaints resolved</div>
+        <!-- Card 1 -->
+        <div class="interactive-card" tabindex="0" data-cat="Garbage">
+          <div class="round-card">
+            <img src="./assets/garbage-round.jpg" class="round-img" alt="Garbage" />
+          </div>
+          <div class="card-caption">Garbage</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./garbage.html" class="btn-learn">Learn More</a>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="stat-tile shadow-sm">
-            <div class="stat-value">92%</div>
-            <div class="stat-label">SLA compliance</div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="stat-tile shadow-sm">
-            <div class="stat-value">220+</div>
-            <div class="stat-label">Officers onboarded</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- CTA -->
-      <div id="raise" class="reveal">
-        <div class="cta-band d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
-          <div>
-            <h3 class="h4 fw-extrabold brand-text mb-1">Ready to raise a complaint?</h3>
-            <p class="small text-body-secondary mb-0">It takes less than a minute to get started.</p>
+        <!-- Card 2 -->
+        <div class="interactive-card" tabindex="0" data-cat="Roads">
+          <div class="round-card">
+            <img src="./assets/road-round.jpg" class="round-img" alt="Roads" />
           </div>
-          <div class="d-flex gap-2">
-            <a href="#" class="btn btn-primary btn-lg">Raise Complaint</a>
-            <a href="#contact" class="btn btn-outline-theme btn-lg">Contact Support</a>
+          <div class="card-caption">Roads</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./roads.html" class="btn-learn">Learn More</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="interactive-card" tabindex="0" data-cat="Child Labour">
+          <div class="round-card">
+            <img src="./assets/child-round1.jpg" class="round-img" alt="Child Labour" />
+          </div>
+          <div class="card-caption">Child Labour</div>
+          <div class="card-actions">
+            <a href="#raise" class="btn-raise">Raise Complaint</a>
+            <a href="./child-labour.html" class="btn-learn">Learn More</a>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section id="dept-icons" class="py-5 bg-white">
-  <div class="container text-center mb-3">
-    <h2 class="h4 fw-extrabold brand-text mb-2">Departments We Support</h2>
-    <p class="text-muted">SevaSetu connects you with key public service departments.</p>
-  </div>
 
-  <div class="rolling-wrapper" aria-label="Supported departments">
-    <div class="rolling-track">
-      <!--  Your 10 icons — replace src with your files -->
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-1.png"  alt="Water Supply"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-2.png"  alt="Electricity"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-3.png"  alt="Roads"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-4.png"  alt="Sanitation"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-5.png"  alt="Health"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-6.png"  alt="Education"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-7.svg"  alt="Transport"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-8.svg"  alt="Environment"></div>
-      <!-- <div class="icon-box"><img class="icon-img" src="./assets/gov-9.svg"  alt="Police"></div> -->
-      <!-- <div class="icon-box"><img class="icon-img" src="./assets/" alt="Municipality"></div> -->
+    <!-- HOW IT WORKS / ROUTE MAP -->
+  <section id="how-it-works" class="py-5 bg-white route-section">
+    <div class="container-lg px-3">
 
-      <!--  Duplicate the 10 for a seamless loop (do not change order) -->
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-1.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-2.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-3.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-4.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-5.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-6.png"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-7.svg"  alt="" aria-hidden="true"></div>
-      <div class="icon-box"><img class="icon-img" src="./assets/gov-8.svg"  alt="" aria-hidden="true"></div>
-      <!-- <div class="icon-box"><img class="icon-img" src="./assets/gov-9.svg"  alt="" aria-hidden="true"></div> -->
-      <!-- <div class="icon-box"><img class="icon-img" src="./assets/icons/icon10.png" alt="" aria-hidden="true"></div> -->
+      <div class="text-center mb-4 reveal">
+        <h2 class="h1 fw-extrabold brand-text mb-2">How to Raise a Complaint</h2>
+        <p class="text-body-secondary mb-0">Follow these simple steps — it takes less than a minute.</p>
+      </div>
+
+      <!-- Responsive grid -->
+      <div class="steps-grid" role="list" aria-label="Complaint steps">
+
+        <!-- Step 1 -->
+        <article class="step-card reveal step-action" role="button" data-step="1" tabindex="0" aria-label="Step 1: Choose Department">
+          <div class="step-head">
+            <span class="step-number">1</span>
+            <span class="step-icon"><i class="bi bi-building"></i></span>
+          </div>
+          <h5 class="step-title">Choose Department</h5>
+          <p class="step-desc">Select the correct category (Water, Roads, Electricity, etc.).</p>
+        </article>
+
+        <!-- Step 2 -->
+        <article class="step-card reveal step-action" role="button" data-step="2" tabindex="0" aria-label="Step 2: Describe Issue">
+          <div class="step-head">
+            <span class="step-number">2</span>
+            <span class="step-icon"><i class="bi bi-pencil-square"></i></span>
+          </div>
+          <h5 class="step-title">Describe Issue</h5>
+          <p class="step-desc">Write issue details clearly along with location.</p>
+        </article>
+
+        <!-- Step 3 -->
+        <article class="step-card reveal step-action" role="button" data-step="3" tabindex="0" aria-label="Step 3: Upload Media">
+          <div class="step-head">
+            <span class="step-number">3</span>
+            <span class="step-icon"><i class="bi bi-camera"></i></span>
+          </div>
+          <h5 class="step-title">Upload Media</h5>
+          <p class="step-desc">Attach photo/video to support the complaint.</p>
+        </article>
+
+        <!-- Step 4 -->
+        <article class="step-card reveal step-action" role="button" data-step="4" tabindex="0" aria-label="Step 4: Submit and Track">
+          <div class="step-head">
+            <span class="step-number">4</span>
+            <span class="step-icon"><i class="bi bi-ticket-perforated"></i></span>
+          </div>
+          <h5 class="step-title">Submit & Track</h5>
+          <p class="step-desc">Submit and monitor progress using your token.</p>
+        </article>
+
+      </div>
+
+      <div class="text-center mt-4 reveal">
+        <a href="#raise" class="btn btn-primary btn-lg px-4">Start Your Complaint</a>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- IMPACT SECTION -->
+  <section id="impact" class="impact-section py-5">
+    <div class="container-lg">
+
+      <div class="text-center mb-4">
+        <span class="badge rounded-pill px-3 py-2 fw-semibold"
+              style="background:rgba(1,51,105,.06); color:var(--accent); border:1px solid var(--border);">
+          Voices of Impact
+        </span>
+        <h2 class="h1 fw-extrabold mt-3 brand-text">Real Stories from SmartSeva</h2>
+        <p class="text-body-secondary">How timely complaints and accountable follow-ups changed real neighbourhoods.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- 1 -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <a href="#" class="impact-card text-decoration-none position-relative d-block">
+            <img src="./assets/garbage-carousel-2.jpg" class="impact-img" alt="Cleaned street after overflow">
+            <div class="impact-overlay"></div>
+            <div class="impact-content">
+              <h3 class="impact-title">From Garbage Pile to Clean Street</h3>
+              <p class="impact-sub text-white-50 mb-0">
+                Ward 18 residents reported overflowing dumps. Sanitation routes were fixed within 24 hours.
+              </p>
+            </div>
+          </a>
+        </div>
+        <!-- 2 -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <a href="#" class="impact-card text-decoration-none position-relative d-block">
+            <img src="./assets/road.jpg" class="impact-img" alt="Repaired road after potholes">
+            <div class="impact-overlay"></div>
+            <div class="impact-content">
+              <h3 class="impact-title">Road Made Drivable Again</h3>
+              <p class="impact-sub text-white-50 mb-0">
+                After multiple pothole complaints, cold-mix patching was scheduled—accidents reduced.
+              </p>
+            </div>
+          </a>
+        </div>
+        <!-- 3 -->
+        <div class="col-12 col-md-6 col-xl-4">
+          <a href="#" class="impact-card text-decoration-none position-relative d-block">
+            <img src="./assets/child-round.jpg" class="impact-img" alt="Child labour awareness">
+            <div class="impact-overlay"></div>
+            <div class="impact-content">
+              <h3 class="impact-title">Child Labour Awareness</h3>
+              <p class="impact-sub text-white-50 mb-0">
+                Reports of minors forced into labour led to rescue, school enrolment and family support.
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / FEATURES (updated) -->
+  <section id="about" class="py-5 bg-white-80 border-y backdrop-blur">
+    <div class="container-lg px-3">
+      <!-- Header -->
+      <div class="text-center mb-4 reveal">
+        <h2 class="h1 fw-extrabold brand-text mb-2">SevaSetu — Faster resolutions, more accountability</h2>
+        <p class="fs-5 text-body-secondary mt-3 reveal">
+          Submit a complaint in under a minute. Our AI prioritizes urgent cases so departments act faster — you track progress all the way.
+        </p>
+      </div>
+
+      <!-- Feature cards -->
+      <div class="row g-4 mt-2">
+        <!-- Citizen-first -->
+        <div class="col-md-4 reveal">
+          <div class="card h-100 border-theme feature-card" aria-hidden="false">
+            <div class="card-body d-flex gap-3 align-items-start">
+              <div class="feature-icon bg-primary text-white rounded-3 d-flex align-items-center justify-content-center" aria-hidden="true">
+                <i class="bi bi-people-fill" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="h5 brand-text mb-1">Citizen-first</h3>
+                <p class="small text-body-secondary mb-0">Simple forms, media uploads, and live tracking keep citizens informed end-to-end.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Prioritization -->
+        <div class="col-md-4 reveal">
+          <div class="card h-100 border-theme feature-card">
+            <div class="card-body d-flex gap-3 align-items-start">
+              <div class="feature-icon bg-success text-white rounded-3 d-flex align-items-center justify-content-center" aria-hidden="true">
+                <i class="bi bi-robot" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="h5 brand-text mb-1">AI Prioritization</h3>
+                <p class="small text-body-secondary mb-0">NLP + Vision models tag complaints, detect sentiment and urgency for faster action.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actionable Analytics -->
+        <div class="col-md-4 reveal">
+          <div class="card h-100 border-theme feature-card">
+            <div class="card-body d-flex gap-3 align-items-start">
+              <div class="feature-icon bg-info text-white rounded-3 d-flex align-items-center justify-content-center" aria-hidden="true">
+                <i class="bi bi-bar-chart-line-fill" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="h5 brand-text mb-1">Actionable Analytics</h3>
+                <p class="small text-body-secondary mb-0">Department-wise trends, SLA breaches and heatmaps to improve service delivery.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div id="analytics" class="row g-3 mt-4 reveal">
+        <div class="col-sm-4">
+          <div class="stat-tile shadow-sm text-center py-3">
+            <div class="stat-value" data-target="12480">0</div>
+            <div class="stat-label">Complaints resolved</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="stat-tile shadow-sm text-center py-3">
+            <div class="stat-value" data-target="92">0%</div>
+            <div class="stat-label">SLA compliance</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="stat-tile shadow-sm text-center py-3">
+            <div class="stat-value" data-target="220">0</div>
+            <div class="stat-label">Officers onboarded</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA band -->
+      <div id="raise" class="reveal mt-4">
+        <div class="cta-band d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3">
+          <div>
+            <h3 class="h4 fw-extrabold brand-text mb-1">Ready to raise a complaint?</h3>
+            <p class="small text-body-secondary mb-0">It takes less than a minute. No login required for basic complaints.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <a href="#complaintForm" class="btn btn-primary btn-lg" id="cta-raise">Raise Complaint</a>
+            <a href="#about-details" class="btn btn-outline-theme btn-lg" id="cta-learn">Learn how it works</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-5 bg-white-80 border-top border-bottom">
+    <div class="container-lg">
+      <div class="text-center mb-4">
+        <h2 class="h2 fw-extrabold brand-text">Frequently Asked Questions</h2>
+        <p class="text-body-secondary mb-0">Answers about filing complaints, tracking, AI prioritization, privacy and more.</p>
+      </div>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-12 col-lg-10">
+
+          <div class="accordion" id="faqAccordion">
+
+            <!-- 1 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
+                  How do I raise a complaint on SmartSeva?
+                </button>
+              </h3>
+              <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Sign in (or continue as guest if enabled), choose the correct department, describe the issue, attach photos or video, and submit. You’ll receive a unique token to track the complaint.
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                  What information should I include to get a faster resolution?
+                </button>
+              </h3>
+              <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Include exact location (landmark/street), a short clear description, date/time, and photos or short videos showing the problem. Evidence speeds up verification and action.
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                  How does the AI prioritization work?
+                </button>
+              </h3>
+              <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Our models analyse the complaint text and attached images to detect category, severity, hazards (e.g., exposed wires, deep potholes), and sentiment (urgent vs routine). The system then suggests a priority so officers can address the most critical issues first.
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                  How long will it take to resolve my complaint?
+                </button>
+              </h3>
+              <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Time-to-resolution varies by department and priority. After submission you can track the complaint status using your token. High priority/urgent issues are routed to immediate action where possible; follow-up timelines appear in the complaint details.
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                  Do I need to create an account to file a complaint?
+                </button>
+              </h3>
+              <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  You can file complaints as a registered user for better tracking and history. Some jurisdictions may also allow guest submissions — check the form. Registered users get notifications and a history of previous complaints.
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                  What if the department doesn’t act or I’m not satisfied with the response?
+                </button>
+              </h3>
+              <div id="faqCollapse6" class="accordion-collapse collapse" aria-labelledby="faqHeading6"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Use the complaint page to request escalation or add comments. If unresolved, follow the escalation path shown in complaint details (escalation to senior officer / grievance cell). You may also contact support via the helpline listed in the footer.
+                </div>
+              </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
+                  Are my personal details and photos secure?
+                </button>
+              </h3>
+              <div id="faqCollapse7" class="accordion-collapse collapse" aria-labelledby="faqHeading7"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  SmartSeva follows data protection practices: personal data is used only for complaint processing and communication. Uploaded media is stored securely and shared only with relevant departments. For details see the Privacy policy link in the footer.
+                </div>
+              </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse8" aria-expanded="false" aria-controls="faqCollapse8">
+                  Which languages are supported?
+                </button>
+              </h3>
+              <div id="faqCollapse8" class="accordion-collapse collapse" aria-labelledby="faqHeading8"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  SmartSeva supports multiple Indian languages (English, हिंदी, తెలుగు, தமிழ் — and more as added). Use the language selector in the header to switch the UI. Complaints written in local languages will be processed and translated where needed for routing and AI analysis.
+                </div>
+              </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
+                  What file types and sizes can I upload?
+                </button>
+              </h3>
+              <div id="faqCollapse9" class="accordion-collapse collapse" aria-labelledby="faqHeading9"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  We accept common image formats (JPEG/PNG) and short videos (MP4/WebM). Recommended max file size is listed on the upload form — compress large files before upload. Avoid uploading sensitive personal information in images.
+                </div>
+              </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
+                  Who do I contact for technical support or accessibility help?
+                </button>
+              </h3>
+              <div id="faqCollapse10" class="accordion-collapse collapse" aria-labelledby="faqHeading10"
+                   data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  For technical issues or accessibility assistance, email
+                  <a href="mailto:support@SmartSeva.gov">support@SmartSeva.gov</a> or call the helpline number listed in the footer.
+                  Provide the token or screenshot to help us troubleshoot faster.
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- /.accordion -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPT ICONS -->
+  <section id="dept-icons" class="py-5 bg-white">
+    <div class="container text-center mb-3">
+      <h2 class="h4 fw-extrabold brand-text mb-2">Departments We Support</h2>
+      <p class="text-muted">SmartSeva connects you with key public service departments.</p>
+    </div>
+
+    <div class="rolling-wrapper" aria-label="Supported departments">
+      <div class="rolling-track">
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-1.png"  alt="Water Supply"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-2.png"  alt="Electricity"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-3.png"  alt="Roads"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-4.png"  alt="Sanitation"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-5.png"  alt="Health"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-6.png"  alt="Education"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-7.svg"  alt="Transport"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-8.svg"  alt="Environment"></div>
+
+        <!-- duplicated for rolling loop -->
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-1.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-2.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-3.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-4.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-5.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-6.png"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-7.svg"  alt="" aria-hidden="true"></div>
+        <div class="icon-box"><img class="icon-img" src="./assets/gov-8.svg"  alt="" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer id="contact" class="mt-auto border-top bg-white">
@@ -306,13 +918,13 @@
         <div class="col-sm-4">
           <div class="fw-semibold brand-text">About</div>
           <p class="small text-body-secondary mt-2">
-            SevaSetu — a bridge between citizens and governance. File grievances, track progress, and improve public services.
+            SmartSeva — a bridge between citizens and governance. File grievances, track progress, and improve public services.
           </p>
         </div>
         <div class="col-sm-4">
           <div class="fw-semibold brand-text">Contact</div>
           <ul class="list-unstyled mt-2 small text-body-secondary">
-            <li>Email: support@sevasetu.gov</li>
+            <li>Email: support@SmartSeva.gov</li>
             <li>Helpline: 1800-000-000</li>
           </ul>
           <div class="d-flex align-items-center gap-2 mt-2">
@@ -324,7 +936,7 @@
       </div>
 
       <div class="text-center border-top pt-3 mt-4 small text-body-tertiary">
-        <div>© 2025 SevaSetu. All rights reserved.</div>
+        <div>© 2025 SmartSeva. All rights reserved.</div>
         <div class="d-flex justify-content-center gap-3 mt-1">
           <a href="#" class="footer-link">Privacy</a>
           <a href="#" class="footer-link">Terms</a>
@@ -337,5 +949,17 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- App JS -->
   <script src="app.js"></script>
+
+  <!-- OPTIONAL: simple hook for language buttons (you can extend in app.js) -->
+  <script>
+    // Front-end hook only. You can move this into app.js.
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        console.log('Selected language:', lang);
+        // here call your backend /api/translate with lang
+      });
+    });
+  </script>
 </body>
 </html>

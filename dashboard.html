@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartSeva — User Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    :root{
+      --primary:   #ff671f;   /* Saffron */
+      --secondary: #046a38;   /* Indian Green */
+      --accent:    #013369;   /* Navy */
+      --bg:        #f3f4f6;
+      --text:      #1f2937;
+      --border:    #d1d5db;
+    }
+
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f3f4f6;
+      color: var(--text);
+    }
+
+    /* ===== NAVBAR helpers (same as your site) ===== */
+    /* .nav-inner{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      width:100%;
+    }
+    .nav-left{ flex:0 0 auto; }
+    .nav-right{ flex:0 0 auto; margin-left:auto; }
+
+    @media (min-width:768px){
+      .nav-center{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%, -50%);
+        display:flex !important;
+        justify-content:center;
+      }
+    }
+    @media (max-width:767.98px){
+      .nav-center{ display:none !important; }
+    }
+
+    .navbar{ border-bottom:1px solid var(--border); }
+    .navbar .nav-link{ color:var(--accent); font-weight:500; }
+    .navbar .nav-link:hover{ color:#011f3d; }
+    .btn-primary{
+      --bs-btn-bg: var(--primary);
+      --bs-btn-border-color: var(--primary);
+      --bs-btn-hover-bg:#e65e1d;
+      --bs-btn-hover-border-color:#e65e1d;
+      border-radius:.8rem;
+      font-weight:600;
+    } */
+
+    /* ===== DASHBOARD LAYOUT ===== */
+    .page-wrapper{
+      max-width: 1180px;
+      margin: 2rem auto;
+      padding: 0 1rem 2.5rem;
+    }
+
+    .dash-title{
+      font-weight:800;
+      color:var(--accent);
+    }
+
+    .summary-card{
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background:#ffffff;
+      padding:1.1rem 1.25rem;
+      box-shadow:0 10px 24px rgba(15,23,42,0.08);
+      display:flex;
+      flex-direction:column;
+      gap:.25rem;
+      height:100%;
+    }
+    .summary-label{
+      font-size:.85rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#6b7280;
+      font-weight:600;
+    }
+    .summary-value{
+      font-size:1.6rem;
+      font-weight:800;
+      color:var(--accent);
+      display:flex;
+      align-items:center;
+      gap:.25rem;
+    }
+    .summary-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:.25rem;
+      font-size:.8rem;
+      padding:.15rem .55rem;
+      border-radius:999px;
+      background:rgba(4,106,56,.08);
+      color:#047857;
+    }
+
+    /* status pills */
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.25rem;
+      padding:.15rem .55rem;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:600;
+    }
+    .status-open{
+      background:rgba(251,191,36,0.14);
+      color:#92400e;
+    }
+    .status-progress{
+      background:rgba(59,130,246,0.12);
+      color:#1d4ed8;
+    }
+    .status-resolved{
+      background:rgba(22,163,74,0.14);
+      color:#166534;
+    }
+
+    /* tabs strip */
+    .dash-tabs .nav-link{
+      border-radius:999px;
+      padding:.4rem 1rem;
+      font-weight:600;
+      color:#4b5563;
+    }
+    .dash-tabs .nav-link.active{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .table thead{
+      background:#f9fafb;
+      font-size:.85rem;
+      color:#6b7280;
+    }
+    .table tbody tr{
+      background:#fff;
+    }
+    .table tbody tr + tr{
+      border-top:1px solid #e5e7eb;
+    }
+    .complaint-id{
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:.8rem;
+      color:#4b5563;
+    }
+
+    .btn-outline-sm{
+      --bs-btn-border-color:#d1d5db;
+      --bs-btn-color:#374151;
+      --bs-btn-hover-bg:#f3f4f6;
+      --bs-btn-hover-border-color:#9ca3af;
+      font-size:.8rem;
+      padding:.25rem .6rem;
+      border-radius:.6rem;
+    }
+  </style>
+</head>
+<body>
+      <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-md navbar-light bg-white sticky-top">
+    <div class="container-fluid nav-inner">
+
+      <!-- LEFT: Brand -->
+      <div class="nav-left d-flex align-items-center">
+        <a class="navbar-brand brand-text fw-bold d-flex align-items-center gap-2" href="#home">
+          <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
+               width="36" height="36" alt="logo" style="border-radius:8px;">
+          <span>SmartSeva</span>
+        </a>
+      </div>
+
+      <!-- CENTER: main links (desktop only) -->
+      <div class="nav-center d-none d-md-flex mx-auto">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item">
+            <a class="btn btn-primary px-3 py-1" href="#raise">Raise Complaint</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#analytics">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: language + profile (desktop) + toggler (mobile) -->
+      <div class="nav-right d-flex align-items-center gap-2">
+
+        <!-- desktop language + profile -->
+        <div class="d-none d-md-flex align-items-center gap-2">
+          <!-- Language -->
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              Language
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="en">English</button></li>
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="hi">हिंदी</button></li>
+              <li><button class="dropdown-item lang-btn" type="button" data-lang="te">తెలుగు</button></li>
+            </ul>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="rounded d-inline-flex
+                          align-items-center justify-content-center"
+                   style="width:auto;height:34px;font-weight:700;">
+                Profile
+              </div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">View Profile</a></li>
+              <li><a class="dropdown-item" href="#">My Complaints</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- mobile toggler -->
+        <button class="navbar-toggler d-md-none" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mobileNav"
+                aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <!-- MOBILE COLLAPSE -->
+      <div class="collapse navbar-collapse" id="mobileNav">
+        <ul class="navbar-nav d-md-none mobile-menu p-2 ms-auto">
+          <li class="nav-item"><a class="nav-link py-2" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link py-2" href="#about">About Us</a></li>
+          <li class="nav-item">
+            <a class="btn btn-primary w-100 mb-2" href="#raise">Raise Complaint</a>
+          </li>
+          <li class="nav-item"><a class="nav-link py-2" href="#analytics">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link py-2" href="#contact">Contact Us</a></li>
+
+          <li><hr class="dropdown-divider"></li>
+
+          <!-- Language (mobile) -->
+          <li class="px-2 text-muted small">Language</li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="en">English</button></li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="hi">हिंदी</button></li>
+          <li><button class="dropdown-item lang-btn" type="button" data-lang="te">తెలుగు</button></li>
+
+          <li><hr class="dropdown-divider"></li>
+
+          <!-- Profile (mobile) -->
+          <li class="px-2 text-muted small">Profile</li>
+          <li><a class="dropdown-item" href="#">View Profile</a></li>
+          <li><a class="dropdown-item" href="#">My Complaints</a></li>
+          <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+
+
+<!-- ===== DASHBOARD CONTENT ===== -->
+<main class="page-wrapper">
+  <header class="mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+    <div>
+      <h1 class="dash-title h3 mb-1">My Complaints</h1>
+      <p class="text-muted mb-0 small">Overview of everything you’ve raised with SmartSeva.</p>
+    </div>
+    <a href="index.html#raise" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-circle me-1"></i> New Complaint
+    </a>
+  </header>
+
+  <!-- Summary Row -->
+  <section class="mb-4">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="summary-card">
+          <span class="summary-label">Total Complaints</span>
+          <div class="summary-value" id="totalCount">0</div>
+          <span class="summary-chip">
+            <i class="bi bi-clock-history"></i>
+            Last 12 months
+          </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="summary-card">
+          <span class="summary-label">In Progress</span>
+          <div class="summary-value text-primary" id="progressCount">0</div>
+          <span class="summary-chip" style="background:rgba(59,130,246,0.08);color:#1d4ed8;">
+            <i class="bi bi-lightning-charge"></i> Being worked on
+          </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="summary-card">
+          <span class="summary-label">Resolved</span>
+          <div class="summary-value text-success" id="resolvedCount">0</div>
+          <span class="summary-chip" style="background:rgba(22,163,74,0.08);color:#15803d;">
+            <i class="bi bi-check-circle"></i> Closed successfully
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs + Tables -->
+  <section>
+    <!-- Tabs -->
+    <ul class="nav dash-tabs mb-3" id="complaintTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-all" data-bs-toggle="tab"
+                data-bs-target="#pane-all" type="button" role="tab">
+          All Complaints
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-progress" data-bs-toggle="tab"
+                data-bs-target="#pane-progress" type="button" role="tab">
+          In Progress
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-resolved" data-bs-toggle="tab"
+                data-bs-target="#pane-resolved" type="button" role="tab">
+          Resolved
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- All -->
+      <div class="tab-pane fade show active" id="pane-all" role="tabpanel">
+        <div class="table-responsive shadow-sm rounded-3">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Location</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-all-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div class="tab-pane fade" id="pane-progress" role="tabpanel">
+        <div class="table-responsive shadow-sm rounded-3">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Location</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-progress-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Resolved -->
+      <div class="tab-pane fade" id="pane-resolved" role="tabpanel">
+        <div class="table-responsive shadow-sm rounded-3">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Category</th>
+                <th scope="col">Location</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table-resolved-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</main>
+  <!-- FOOTER -->
+  <footer id="contact" class="mt-auto border-top bg-white">
+    <div class="container-lg px-3 py-5">
+      <div class="row g-4">
+        <div class="col-sm-4">
+          <div class="fw-semibold brand-text">Quick Links</div>
+          <ul class="list-unstyled mt-2 small">
+            <li><a class="footer-link" href="#home">Home</a></li>
+            <li><a class="footer-link" href="#about">About Us</a></li>
+            <li><a class="footer-link" href="#raise">Raise Complaint</a></li>
+            <li><a class="footer-link" href="#analytics">Analytics</a></li>
+            <li><a class="footer-link" href="#contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <div class="fw-semibold brand-text">About</div>
+          <p class="small text-body-secondary mt-2">
+            SmartSeva — a bridge between citizens and governance. File grievances, track progress, and improve public services.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <div class="fw-semibold brand-text">Contact</div>
+          <ul class="list-unstyled mt-2 small text-body-secondary">
+            <li>Email: support@SmartSeva.gov</li>
+            <li>Helpline: 1800-000-000</li>
+          </ul>
+          <div class="d-flex align-items-center gap-2 mt-2">
+            <span class="rounded-circle d-inline-block swatch" style="background: var(--secondary)"></span>
+            <span class="rounded-circle d-inline-block swatch" style="background: var(--primary)"></span>
+            <span class="rounded-circle d-inline-block swatch" style="background: var(--accent)"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center border-top pt-3 mt-4 small text-body-tertiary">
+        <div>© 2025 SmartSeva. All rights reserved.</div>
+        <div class="d-flex justify-content-center gap-3 mt-1">
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
