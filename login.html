@@ -164,102 +164,106 @@
 </head>
 <body>
 
-  <!-- NAVBAR (same as signup page) -->
-  <nav class="navbar navbar-expand-md bg-white sticky-top" style="">
-    <div class="container-fluid nav-inner">
+ <!-- SMARTSEVA GLOBAL NAVBAR -->
+<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
+  <div class="container-fluid">
 
-      <!-- LEFT: Brand -->
-      <div class="nav-left d-flex align-items-center">
-        <a class="navbar-brand brand-text fw-bold d-flex align-items-center gap-2" href="index.html#home">
-          <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
-               width="36" height="36" alt="logo" style="border-radius:8px;">
-          <span style="color:var(--accent); font-weight:800;">SmartSeva</span>
-        </a>
-      </div>
+    <!-- LEFT: Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html#home">
+      <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
+           width="36" height="36" alt="SmartSeva" style="border-radius:8px;object-fit:cover;">
+      <span class="brand-text fw-bold">SmartSeva</span>
+    </a>
 
-      <!-- CENTER (visible on md+) -->
-      <div class="nav-center d-none d-md-flex">
-        <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
-          <li class="nav-item"><a class="btn btn-primary px-3 py-1" href="index.html#raise">Raise Complaint</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#analytics">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact Us</a></li>
-        </ul>
-      </div>
+    <!-- Mobile Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <!-- RIGHT: language + profile -->
-      <div class="nav-right d-flex align-items-center gap-2 ms-auto">
+    <!-- CENTER + RIGHT -->
+    <div class="collapse navbar-collapse" id="mainNav">
 
-        <div class="d-none d-md-flex align-items-center gap-2">
-          <!-- Language -->
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-              Language
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><button class="dropdown-item">English</button></li>
-              <li><button class="dropdown-item">हिंदी</button></li>
-              <li><button class="dropdown-item">తెలుగు</button></li>
-            </ul>
-          </div>
+      <!-- CENTER: main links -->
+      <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#about">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary px-3 py-1 ms-md-2 my-1 my-md-0" href="index.html#raise">
+            Submit a Grievance
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#contact">Contact Us</a>
+        </li>
+      </ul>
 
-          <!-- Profile -->
-          <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle d-flex align-items-center"
-                    data-bs-toggle="dropdown">
-              <div class="rounded d-inline-flex align-items-center justify-content-center"
-                   style="height:34px;font-weight:700;">
-                Profile
-              </div>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">View Profile</a></li>
-              <li><a class="dropdown-item" href="#">My Complaints</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
-            </ul>
-          </div>
+      <!-- RIGHT: language + auth -->
+      <div class="d-flex align-items-center gap-2 ms-md-0 ms-auto">
+
+        <!-- Language dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light border dropdown-toggle py-1 px-2"
+                  id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Language
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+            <li><button class="dropdown-item" type="button">English</button></li>
+            <li><button class="dropdown-item" type="button">हिंदी</button></li>
+            <li><button class="dropdown-item" type="button">తెలుగు</button></li>
+          </ul>
         </div>
 
-        <!-- Mobile toggler -->
-        <button class="navbar-toggler d-md-none" type="button"
-                data-bs-toggle="collapse" data-bs-target="#mobileNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- AUTH AREA -->
+        <div class="ms-1">
+
+          <!-- STATE 1: Logged OUT (default) -->
+          <div id="navAuthLoggedOut" class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle py-1 px-3"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="login.html">Login</a></li>
+              <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="adminlogin.html">Admin Login</a></li>
+            </ul>
+          </div>
+
+          <!-- STATE 2: Logged IN (hidden until JS detects smartseva_user) -->
+          <div id="navAuthLoggedIn" class="dropdown d-none">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 py-1 px-2"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- avatar or initial -->
+              <div id="navUserAvatar"
+                   class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                   style="width:32px;height:32px;font-size:.9rem;font-weight:700;">
+                U
+              </div>
+              <span id="navUserName" class="small fw-semibold">User</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="profile.html">View Profile</a></li>
+              <li><a class="dropdown-item" href="dashboard.html">My Complaints</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item text-danger" id="btnNavLogout" type="button">Logout</button></li>
+            </ul>
+          </div>
+
+        </div>
+
       </div>
-
-      <!-- Mobile Collapse -->
-      <div class="collapse navbar-collapse" id="mobileNav">
-        <ul class="navbar-nav d-md-none mobile-menu p-2 ms-auto">
-          <li class="nav-item"><a class="nav-link py-2" href="index.html#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link py-2" href="index.html#about">About Us</a></li>
-          <li class="nav-item">
-            <a class="btn btn-primary w-100 mb-2" href="index.html#raise">Raise Complaint</a>
-          </li>
-          <li class="nav-item"><a class="nav-link py-2" href="index.html#analytics">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link py-2" href="index.html#contact">Contact Us</a></li>
-
-          <li><hr></li>
-
-          <!-- Language -->
-          <li class="px-2 text-muted small">Language</li>
-          <li><button class="dropdown-item">English</button></li>
-          <li><button class="dropdown-item">हिंदी</button></li>
-          <li><button class="dropdown-item">తెలుగు</button></li>
-
-          <li><hr></li>
-
-          <!-- Profile -->
-          <li class="px-2 text-muted small">Profile</li>
-          <li><a class="dropdown-item">View Profile</a></li>
-          <li><a class="dropdown-item">My Complaints</a></li>
-          <li><a class="dropdown-item text-danger">Logout</a></li>
-        </ul>
-      </div>
-
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- LOGIN CARD -->
   <div class="auth-wrapper">
@@ -415,5 +419,6 @@
       window.location.href = "index.html";
     });
   </script>
+  <script src="app.js"></script>
 </body>
 </html>
