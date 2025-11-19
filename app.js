@@ -502,3 +502,121 @@ document.querySelectorAll('.lang-option').forEach(btn => {
   });
 });
 
+  // ---- Helper: get current user from localStorage ----
+  function getSmartSevaUser() {
+    try {
+      const raw = localStorage.getItem("smartseva_user");
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      console.warn("Invalid smartseva_user JSON", e);
+      return null;
+    }
+  }
+
+  // ---- Build display name & avatar initial from stored user ----
+  function getUserDisplayInfo(user) {
+    if (!user) return { name: "User", initial: "U", avatarUrl: null };
+
+    const name =
+      user.name ||
+      user.fullName ||
+      user.displayName ||
+      user.given_name ||
+      (user.email ? user.email.split("@")[0] : "User");
+
+    const initial = name && name.trim().length
+      ? name.trim().charAt(0).toUpperCase()
+      : "U";
+
+    const avatarUrl = user.picture || user.avatarUrl || null; // if you store google picture
+
+    return { name, initial, avatarUrl };
+  }
+
+  // ---- Render navbar auth state ----
+  function renderNavbarAuth() {
+    const loggedOutEl = document.getElementById("navAuthLoggedOut");
+    const loggedInEl  = document.getElementById("navAuthLoggedIn");
+    const nameEl      = document.getElementById("navUserName");
+    const avatarEl    = document.getElementById("navUserAvatar");
+    const logoutBtn   = document.getElementById("btnNavLogout");
+
+    if (!loggedOutEl || !loggedInEl) return;
+
+    const user = getSmartSevaUser();
+
+    if (!user) {
+      // Not logged in
+      loggedOutEl.classList.remove("d-none");
+      loggedInEl.classList.add("d-none");
+      return;
+    }
+
+    // Logged in
+    const info = getUserDisplayInfo(user);
+
+    if (nameEl)   nameEl.textContent = info.name;
+    if (avatarEl) {
+      if (info.avatarUrl) {
+        // show image if available
+        avatarEl.style.backgroundImage = `url("${info.avatarUrl}")`;
+        avatarEl.style.backgroundSize = "cover";
+        avatarEl.style.backgroundPosition = "center";
+        avatarEl.textContent = ""; // hide initial text
+      } else {
+        // fallback initial
+        avatarEl.style.backgroundImage = "none";
+        avatarEl.textContent = info.initial;
+      }
+    }
+
+    loggedOutEl.classList.add("d-none");
+    loggedInEl.classList.remove("d-none");
+
+    if (logoutBtn && !logoutBtn.dataset._bound) {
+      logoutBtn.dataset._bound = "1";
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("smartseva_user");   // user session
+        // optional: also clear admin if you want
+        // localStorage.removeItem("smartseva_admin");
+        window.location.href = "index.html";
+      });
+    }
+  }
+
+  // Init on DOM ready
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNavbarAuth();
+  });
+
+  // Optional: if you update localStorage from other scripts and want nav to react,
+  // you can call renderNavbarAuth() again after login/signup success.
+
+document.addEventListener("DOMContentLoaded", () => {
+  const currentPage = window.location.pathname.split("/").pop().toLowerCase();
+  const currentHash = window.location.hash.toLowerCase();
+
+  document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+    const linkHref = link.getAttribute("href")?.toLowerCase() || "";
+
+    // Case 1: Exact page match
+    if (linkHref === currentPage && currentPage !== "") {
+      link.classList.add("active");
+      return;
+    }
+
+    // Case 2: index sections (#about, #contact, etc.)
+    if (currentPage === "index.html") {
+      if (linkHref.includes(currentHash) && currentHash !== "") {
+        link.classList.add("active");
+        return;
+      }
+    }
+
+    // Case 3: Home page of domain without filename (like domain.com/)
+    if ((currentPage === "" || currentPage === "index.html") && linkHref.includes("#home")) {
+      link.classList.add("active");
+    }
+  });
+});

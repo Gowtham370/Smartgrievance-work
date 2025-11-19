@@ -10,24 +10,6 @@
   --border:    #d1d5db;   /* Slate-300 */
 }
 
-/* =========================
-   NAVBAR (FINAL)
-   ========================= */
-
-/* base bar */
-.navbar {
-  width: 100%;
-  border-bottom: 1px solid var(--border);
-  background: #fff;
-}
-
-/* main flex row: LEFT | CENTER | RIGHT */
-.nav-inner {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-/* --- SmartSeva highlight section --- */
 
 #smartseva-highlight {
   background: rgba(255,255,255,0.65);
@@ -39,6 +21,56 @@
 /* left text block */
 .highlight-text p {
   font-size: 0.98rem;
+}
+
+/* SmartSeva navbar tweaks (reuses your theme variables) */
+:root{
+  --primary:   #ff671f;
+  --secondary: #046a38;
+  --accent:    #013369;
+  --bg:        #f3f4f6;
+  --text:      #1f2937;
+  --border:    #d1d5db;
+}
+
+.navbar .brand-text{
+  color: var(--accent);
+}
+
+.navbar .nav-link{
+  color: var(--accent);
+  font-weight: 500;
+}
+.navbar .nav-link:hover{
+  color: var(--primary);
+}
+
+.navbar .btn-primary{
+  --bs-btn-bg: var(--primary);
+  --bs-btn-border-color: var(--primary);
+  --bs-btn-hover-bg:#e65e1d;
+  --bs-btn-hover-border-color:#e65e1d;
+}
+
+.navbar .btn-outline-primary{
+  --bs-btn-color: var(--primary);
+  --bs-btn-border-color: var(--primary);
+  --bs-btn-hover-bg: var(--primary);
+  --bs-btn-hover-border-color: var(--primary);
+  --bs-btn-hover-color: #fff;
+}
+
+.navbar{
+  border-bottom: 1px solid var(--border);
+}
+.nav-link.active {
+  color: var(--primary) !important;
+  font-weight: 700;
+}
+
+.navbar .btn-primary.active {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
 }
 
 /* right carousel card */
@@ -135,73 +167,7 @@
 }
 
 
-/* left: brand */
-/* .nav-left {
-  flex: 0 0 auto;
-} */
 
-/* center: nav menu (desktop) */
-.nav-center {
-  flex:200;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-}
-
-/* right: language + profile, pinned to far right */
-/* .nav-right {
-  flex: 0 0 auto;
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-} */
-
-/* hide center on small screens (you already use mobileNav collapse) */
-@media (max-width: 767.98px) {
-  .nav-center {
-    display: none !important;
-  }
-}
-
-/* navbar colors */
-.navbar .nav-link {
-  color: var(--accent);
-  font-weight: 500;
-}
-
-.brand-text {
-  color: var(--accent);
-  font-weight: 800;
-}
-
-/* primary button in navbar */
-.navbar .btn.btn-primary {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-/* mobile dropdown box */
-.mobile-menu {
-  min-width: 220px;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-}
-
-/* toggler border / icon visibility */
-.navbar-toggler {
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-}
-
-/* make sure inner container is full width */
-nav.navbar .container-fluid {
-  width: 100%;
-  max-width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  
-}
 
 /* =========================
    Scroll progress bar

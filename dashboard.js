@@ -21,7 +21,6 @@ const USER_STORAGE_KEY = "smartseva_user";
 function getCurrentUser() {
   const raw = localStorage.getItem(USER_STORAGE_KEY);
   if (!raw) return null;
-
   try {
     return JSON.parse(raw);
   } catch (e) {
