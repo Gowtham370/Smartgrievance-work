@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SmartSeva — My Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Global theme -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f3f4f6;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .profile-shell{
+      flex:1;
+      padding: 2.5rem 1rem 3rem;
+    }
+
+    .profile-header-title{
+      font-weight:800;
+      color:var(--accent);
+    }
+
+    .profile-card{
+      border-radius: 18px;
+      border:1px solid var(--border);
+      background:#ffffff;
+      box-shadow:0 12px 30px rgba(15,23,42,0.08);
+    }
+
+    .profile-avatar{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:1.6rem;
+      background:linear-gradient(145deg, rgba(255,103,31,0.1), rgba(1,51,105,0.1));
+      color:var(--accent);
+    }
+
+    .pill-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.25rem .7rem;
+      border-radius:999px;
+      font-size:.75rem;
+      background:rgba(1,51,105,0.06);
+      color:var(--accent);
+    }
+
+    .pill-tag i{
+      font-size:.85rem;
+    }
+
+    .profile-section-title{
+      font-size:.9rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:#6b7280;
+      margin-bottom:.35rem;
+    }
+
+    .info-row-label{
+      font-size:.85rem;
+      color:#6b7280;
+    }
+
+    .info-row-value{
+      font-size:.95rem;
+      font-weight:500;
+      color:#111827;
+    }
+
+    .stat-chip{
+      border-radius:14px;
+      padding:.4rem .8rem;
+      background:#f9fafb;
+      border:1px solid var(--border);
+      font-size:.8rem;
+    }
+
+    @media (max-width: 768px){
+      .profile-shell{
+        padding:1.5rem 1rem 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SMARTSEVA GLOBAL NAVBAR (same pattern as raise.html) -->
+<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
+  <div class="container-fluid">
+
+    <!-- LEFT: Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html#home">
+      <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
+           width="36" height="36" alt="SmartSeva" style="border-radius:8px;object-fit:cover;">
+      <span class="brand-text fw-bold">SmartSeva</span>
+    </a>
+
+    <!-- Mobile Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- CENTER + RIGHT -->
+    <div class="collapse navbar-collapse" id="mainNav">
+
+      <!-- CENTER: main links -->
+      <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#about">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary px-3 py-1 ms-md-2 my-1 my-md-0" href="index.html#raise">
+            Submit a Grievance
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#contact">Contact Us</a>
+        </li>
+      </ul>
+
+      <!-- RIGHT: language + auth -->
+      <div class="d-flex align-items-center gap-2 ms-md-0 ms-auto">
+
+        <!-- Language dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light border dropdown-toggle py-1 px-2"
+                  id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Language
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+            <li><button class="dropdown-item" type="button">English</button></li>
+            <li><button class="dropdown-item" type="button">हिंदी</button></li>
+            <li><button class="dropdown-item" type="button">తెలుగు</button></li>
+          </ul>
+        </div>
+
+        <!-- AUTH AREA -->
+        <div class="ms-1">
+
+          <!-- STATE 1: Logged OUT -->
+          <div id="navAuthLoggedOut" class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle py-1 px-3"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="login.html">Login</a></li>
+              <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="adminlogin.html">Admin Login</a></li>
+            </ul>
+          </div>
+
+          <!-- STATE 2: Logged IN -->
+          <div id="navAuthLoggedIn" class="dropdown d-none">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 py-1 px-2"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div id="navUserAvatar"
+                   class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                   style="width:32px;height:32px;font-size:.9rem;font-weight:700;">
+                U
+              </div>
+              <span id="navUserName" class="small fw-semibold">User</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="profile.html">View Profile</a></li>
+              <li><a class="dropdown-item" href="dashboard.html">My Complaints</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item text-danger" id="btnNavLogout" type="button">Logout</button></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN PROFILE CONTENT -->
+<main class="profile-shell container-lg">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div>
+        <div class="small text-muted">Account</div>
+        <h1 class="profile-header-title h4 mb-0">My Profile</h1>
+      </div>
+      <div class="text-end small text-muted">
+        <span class="pill-tag">
+          <i class="bi bi-person-badge"></i>
+          <span id="profileRoleLabel">Citizen User</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT: overview & quick stats -->
+    <div class="col-md-4">
+      <div class="profile-card p-4 mb-3">
+        <div class="d-flex flex-column align-items-center text-center">
+          <div id="profileAvatar" class="profile-avatar mb-3">
+            U
+          </div>
+          <h2 id="profileName" class="h5 mb-1">SmartSeva User</h2>
+          <div id="profileEmail" class="small text-muted mb-2">you@example.com</div>
+          <div class="small text-success fw-semibold" id="profileProviderLabel">
+            Logged in via email
+          </div>
+
+          <hr class="w-100 my-3">
+
+          <div class="w-100 small text-start">
+            <div class="info-row-label">Member since</div>
+            <div id="profileJoined" class="info-row-value mb-2">–</div>
+
+            <div class="info-row-label">Registered mobile</div>
+            <div id="profilePhone" class="info-row-value mb-2 text-truncate">Not added</div>
+          </div>
+
+          <button type="button" class="btn btn-outline-primary btn-sm mt-2" disabled>
+            Edit details (coming soon)
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-card p-3 small">
+        <div class="profile-section-title">Security</div>
+        <ul class="mb-0 ps-3">
+          <li>We never show your password on this page.</li>
+          <li>Use a strong password & avoid sharing your login.</li>
+          <li>Logout from shared or public devices.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT: details & complaint summary -->
+    <div class="col-md-8">
+
+      <!-- Account details -->
+      <div class="profile-card p-4 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div class="profile-section-title">Account details</div>
+            <div class="small text-muted">Basic information linked to your SmartSeva profile.</div>
+          </div>
+        </div>
+
+        <div class="row g-3 small">
+          <div class="col-sm-6">
+            <div class="info-row-label">Full name</div>
+            <div id="detailsName" class="info-row-value">SmartSeva User</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-row-label">Email</div>
+            <div id="detailsEmail" class="info-row-value text-truncate">you@example.com</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-row-label">Mobile number</div>
+            <div id="detailsPhone" class="info-row-value">Not added</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-row-label">Preferred language</div>
+            <div id="detailsLanguage" class="info-row-value">English (default)</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-row-label">Login method</div>
+            <div id="detailsProvider" class="info-row-value">Email / Password</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="info-row-label">Last login</div>
+            <div id="detailsLastLogin" class="info-row-value">–</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complaints summary -->
+      <div class="profile-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div class="profile-section-title">Complaints summary</div>
+            <div class="small text-muted">Quick glance at your complaints across SmartSeva.</div>
+          </div>
+          <a href="dashboard.html" class="btn btn-sm btn-outline-primary">
+            View full dashboard
+          </a>
+        </div>
+
+        <div class="row g-3 small">
+          <div class="col-6 col-md-3">
+            <div class="stat-chip d-flex flex-column">
+              <span class="text-muted">Total raised</span>
+              <span id="statTotal" class="fw-bold fs-6">0</span>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-chip d-flex flex-column">
+              <span class="text-muted">In progress</span>
+              <span id="statInProgress" class="fw-bold fs-6">0</span>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-chip d-flex flex-column">
+              <span class="text-muted">Resolved</span>
+              <span id="statResolved" class="fw-bold fs-6">0</span>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-chip d-flex flex-column">
+              <span class="text-muted">Rejected</span>
+              <span id="statRejectedUser" class="fw-bold fs-6">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="small text-muted mt-3">
+          These numbers are calculated from your complaint history. When you connect a real backend,
+          replace this with live data from the database.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER (same pattern as other pages) -->
+<footer id="contact" class="mt-auto border-top bg-white">
+  <div class="container-lg px-3 py-5">
+    <div class="row g-4">
+      <div class="col-sm-4">
+        <div class="fw-semibold brand-text">Quick Links</div>
+        <ul class="list-unstyled mt-2 small">
+          <li><a class="footer-link" href="#home">Home</a></li>
+          <li><a class="footer-link" href="#about">About Us</a></li>
+          <li><a class="footer-link" href="#raise">Raise Complaint</a></li>
+          <li><a class="footer-link" href="#analytics">Analytics</a></li>
+          <li><a class="footer-link" href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <div class="fw-semibold brand-text">About</div>
+        <p class="small text-body-secondary mt-2">
+          SmartSeva — a bridge between citizens and governance. File grievances, track progress, and improve public services.
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <div class="fw-semibold brand-text">Contact</div>
+        <ul class="list-unstyled mt-2 small text-body-secondary">
+          <li>Email: support@SmartSeva.gov</li>
+          <li>Helpline: 1800-000-000</li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 mt-2">
+          <span class="rounded-circle d-inline-block swatch" style="background: var(--secondary)"></span>
+          <span class="rounded-circle d-inline-block swatch" style="background: var(--primary)"></span>
+          <span class="rounded-circle d-inline-block swatch" style="background: var(--accent)"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center border-top pt-3 mt-4 small text-body-tertiary">
+      <div>© 2025 SmartSeva. All rights reserved.</div>
+      <div class="d-flex justify-content-center gap-3 mt-1">
+        <a href="#" class="footer-link">Privacy</a>
+        <a href="#" class="footer-link">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your global app logic for nav login state -->
+<script src="app.js"></script>
+
+<script>
+  // Simple profile loader from localStorage.smartseva_user
+  document.addEventListener("DOMContentLoaded", () => {
+    const raw = localStorage.getItem("smartseva_user");
+    if (!raw) {
+      // not logged in -> push to login
+      window.location.href = "login.html";
+      return;
+    }
+
+    let user;
+    try {
+      user = JSON.parse(raw);
+    } catch (e) {
+      console.error("Invalid smartseva_user JSON", e);
+      window.location.href = "login.html";
+      return;
+    }
+
+    const name  = user.name || "SmartSeva User";
+    const email = user.email || "Not available";
+    const phone = user.phone || "Not added";
+    const provider = user.provider || "local";
+
+    const joinedAt =
+      user.createdAt || user.signupTime || user.loginTime || null;
+
+    const lastLogin =
+      user.loginTime || user.signupTime || null;
+
+    // Avatar initial
+    const initial = name.trim().charAt(0).toUpperCase() || "U";
+
+    // Fill overview
+    document.getElementById("profileName").textContent  = name;
+    document.getElementById("detailsName").textContent  = name;
+    document.getElementById("profileAvatar").textContent = initial;
+
+    document.getElementById("profileEmail").textContent = email;
+    document.getElementById("detailsEmail").textContent = email;
+
+    document.getElementById("profilePhone").textContent = phone;
+    document.getElementById("detailsPhone").textContent = phone;
+
+    // Provider labels
+    let providerText = "Email / Password";
+    let providerBadge = "Logged in via email";
+    if (provider === "google") {
+      providerText = "Google account";
+      providerBadge = "Logged in via Google";
+    }
+    document.getElementById("detailsProvider").textContent = providerText;
+    document.getElementById("profileProviderLabel").textContent = providerBadge;
+
+    // Role label (just a simple citizen role for now)
+    document.getElementById("profileRoleLabel").textContent = "Citizen User";
+
+    // Dates
+    const formatDate = (iso) => {
+      if (!iso) return "–";
+      const d = new Date(iso);
+      return isNaN(d) ? "–" : d.toLocaleString();
+    };
+
+    document.getElementById("profileJoined").textContent    = formatDate(joinedAt);
+    document.getElementById("detailsLastLogin").textContent = formatDate(lastLogin);
+
+    // Language (placeholder until you store preference)
+    document.getElementById("detailsLanguage").textContent = "English (default)";
+
+    // Complaints summary from localStorage (if you store them)
+    // expected structure: [{status: "pending"|"in-progress"|"resolved"|"rejected", ...}, ...]
+    try {
+      const rawComplaints = localStorage.getItem("smartseva_complaints") || "[]";
+      const complaints = JSON.parse(rawComplaints);
+
+      const total = complaints.length;
+      const inProg = complaints.filter(c => c.status === "in-progress").length;
+      const resolved = complaints.filter(c => c.status === "resolved").length;
+      const rejected = complaints.filter(c => c.status === "rejected").length;
+
+      document.getElementById("statTotal").textContent        = total;
+      document.getElementById("statInProgress").textContent   = inProg;
+      document.getElementById("statResolved").textContent     = resolved;
+      document.getElementById("statRejectedUser").textContent = rejected;
+    } catch (e) {
+      console.warn("Could not parse smartseva_complaints", e);
+    }
+  });
+</script>
+
+</body>
+</html>

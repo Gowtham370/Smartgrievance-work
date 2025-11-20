@@ -315,32 +315,54 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <dl class="row small">
-            <dt class="col-sm-3">Token</dt>
-            <dd class="col-sm-9" id="detailToken"></dd>
+  <div class="row small g-3">
+    <!-- LEFT: text details -->
+    <div class="col-md-7">
+      <dl class="row mb-0">
+        <dt class="col-sm-4">Token</dt>
+        <dd class="col-sm-8" id="detailToken"></dd>
 
-            <dt class="col-sm-3">Citizen</dt>
-            <dd class="col-sm-9" id="detailCitizen"></dd>
+        <dt class="col-sm-4">Citizen</dt>
+        <dd class="col-sm-8" id="detailCitizen"></dd>
 
-            <dt class="col-sm-3">Category</dt>
-            <dd class="col-sm-9" id="detailCategory"></dd>
+        <dt class="col-sm-4">Category</dt>
+        <dd class="col-sm-8" id="detailCategory"></dd>
 
-            <dt class="col-sm-3">Location</dt>
-            <dd class="col-sm-9" id="detailLocation"></dd>
+        <dt class="col-sm-4">Location</dt>
+        <dd class="col-sm-8" id="detailLocation"></dd>
 
-            <dt class="col-sm-3">Severity</dt>
-            <dd class="col-sm-9" id="detailSeverity"></dd>
+        <dt class="col-sm-4">Severity</dt>
+        <dd class="col-sm-8" id="detailSeverity"></dd>
 
-            <dt class="col-sm-3">Raised at</dt>
-            <dd class="col-sm-9" id="detailRaised"></dd>
+        <dt class="col-sm-4">Raised at</dt>
+        <dd class="col-sm-8" id="detailRaised"></dd>
 
-            <dt class="col-sm-3">Description</dt>
-            <dd class="col-sm-9" id="detailDescription"></dd>
+        <dt class="col-sm-4">Current status</dt>
+        <dd class="col-sm-8" id="detailStatus"></dd>
 
-            <dt class="col-sm-3">Current status</dt>
-            <dd class="col-sm-9" id="detailStatus"></dd>
-          </dl>
+        <dt class="col-sm-4">Description</dt>
+        <dd class="col-sm-8" id="detailDescription"></dd>
+      </dl>
+    </div>
+
+    <!-- RIGHT: image -->
+    <div class="col-md-5">
+      <div class="border rounded-3 p-2 bg-light">
+        <div class="fw-semibold mb-2">Evidence photo</div>
+
+        <img id="detailImage"
+             class="img-fluid rounded-3 d-none mb-1"
+             alt="Complaint image" />
+
+        <div id="detailImagePlaceholder"
+             class="text-muted small">
+          No image attached for this complaint.
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
         </div>
