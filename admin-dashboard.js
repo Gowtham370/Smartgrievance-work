@@ -14,7 +14,6 @@
     try {
       const admin = JSON.parse(raw);
 
-      // timeout check
       if (admin.expiresAt && Date.now() > admin.expiresAt) {
         localStorage.removeItem("smartseva_admin");
         alert("Admin session expired. Please login again.");
@@ -22,7 +21,6 @@
         return null;
       }
 
-      // role-based access
       if (!admin.geid || admin.role !== "gov_admin") {
         window.location.href = "adminlogin.html";
         return null;
@@ -52,10 +50,18 @@
     }
   }
 
-  // ===== 3. Fetch complaints (plug to backend later) =====
+  // ===== 3. Fetch complaints =====
   async function fetchComplaintsFromServer() {
+    // 🔥  First: try localStorage (data from raise.html)
     try {
-      // 👉 Replace with your real API when backend is ready
+      const local = JSON.parse(localStorage.getItem("smartseva_complaints") || "[]");
+      if (local.length) return local;
+    } catch (e) {
+      console.warn("Could not read local complaints", e);
+    }
+
+    // 👉 If no local data, use backend (when ready) or demo data
+    try {
       const res = await fetch("/api/admin/complaints", {
         headers: { "Content-Type": "application/json" }
       });
@@ -63,7 +69,6 @@
       return await res.json();
     } catch (err) {
       console.error("Fetch complaints failed, using demo data.", err);
-      // demo data
       return [
         {
           id: 1,
@@ -74,29 +79,8 @@
           severity: "High",
           raisedAt: "2025-11-10T09:30:00Z",
           status: "pending",
-          description: "Overflowing garbage pile blocking footpath for 3 days."
-        },
-        {
-          id: 2,
-          token: "SV-2025-0002",
-          citizenName: "Anita Sharma",
-          category: "Roads",
-          location: "Ring Road, Sector 5",
-          severity: "Medium",
-          raisedAt: "2025-11-11T11:15:00Z",
-          status: "approved",
-          description: "Multiple potholes causing slow traffic and near-miss accidents."
-        },
-        {
-          id: 3,
-          token: "SV-2025-0003",
-          citizenName: "Suresh Yadav",
-          category: "Electricity",
-          location: "Street 4, Old Market",
-          severity: "Critical",
-          raisedAt: "2025-11-11T18:00:00Z",
-          status: "sent",
-          description: "Exposed live wires hanging near a shop entrance."
+          description: "Overflowing garbage pile blocking footpath for 3 days.",
+          imageData: null
         }
       ];
     }
@@ -114,7 +98,7 @@
       return true;
     } catch (err) {
       console.warn("Status API not wired, mocking success.", err);
-      return true; // pretend OK until API ready
+      return true;
     }
   }
 
@@ -137,8 +121,8 @@
   }
 
   function renderStats() {
-    const sent      = complaints.filter(c => c.status === "sent").length;
-    const rejected  = complaints.filter(c => c.status === "rejected").length;
+    const sent     = complaints.filter(c => c.status === "sent").length;
+    const rejected = complaints.filter(c => c.status === "rejected").length;
 
     const sentEl = document.getElementById("statSent");
     const rejEl  = document.getElementById("statRejected");
@@ -202,7 +186,7 @@
     }
   }
 
-  // ===== 6. Detail modal =====
+  // ===== 6. Detail modal (with image) =====
   function openDetailModal(complaint) {
     if (!complaint) return;
 
@@ -214,6 +198,20 @@
     document.getElementById("detailRaised").textContent      = formatDate(complaint.raisedAt);
     document.getElementById("detailDescription").textContent = complaint.description || "-";
     document.getElementById("detailStatus").textContent      = complaint.status || "-";
+
+    // 🔥 IMAGE HANDLING
+    const imgEl = document.getElementById("detailImage");
+    const placeholder = document.getElementById("detailImagePlaceholder");
+
+    if (complaint.imageData) {
+      imgEl.src = complaint.imageData;
+      imgEl.classList.remove("d-none");
+      if (placeholder) placeholder.classList.add("d-none");
+    } else {
+      imgEl.src = "";
+      imgEl.classList.add("d-none");
+      if (placeholder) placeholder.classList.remove("d-none");
+    }
 
     const modalEl = document.getElementById("complaintModal");
     if (!modalEl) return;
@@ -282,10 +280,9 @@
     });
   }
 
-  // ===== 8. Logout + inactivity timeout =====
+  // ===== 8. Logout + inactivity =====
   function setupLogout() {
     const logoutFn = (reason = "manual") => {
-      // write logout log
       const raw = localStorage.getItem("smartseva_admin");
       const logs = JSON.parse(localStorage.getItem("smartseva_admin_logs") || "[]");
       if (raw) {
@@ -334,29 +331,24 @@
     const admin = requireAdminAuth();
     if (!admin) return;
 
-    // Show GEID
     const geidLabel = document.getElementById("adminGeidLabel");
     if (geidLabel && admin.geid) {
       geidLabel.textContent = `GEID: ${admin.geid}`;
     }
 
-    // Logout + inactivity
     const doLogout = setupLogout();
     setupInactivityTimer(doLogout);
 
-    // Filter
     const statusFilter = document.getElementById("statusFilter");
     if (statusFilter) {
       statusFilter.addEventListener("change", renderTable);
     }
 
-    // Table actions
     const tbody = document.getElementById("complaintsBody");
     if (tbody) {
       tbody.addEventListener("click", handleRowAction);
     }
 
-    // Load data
     complaints = await fetchComplaintsFromServer();
     renderStats();
     renderTable();
