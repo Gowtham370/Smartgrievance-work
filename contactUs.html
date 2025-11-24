@@ -4,14 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact Us - Query Form</title>
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+    <!-- Leaflet 1.9.4 CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Leaflet 1.9.4 JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     <style>
       body {
         background-color: #f5f7fa;
+      }
+
+      #map {
+        height: 400px;
+        width: 100%;
       }
 
       .Query-form,
@@ -28,108 +50,244 @@
         font-weight: 600;
       }
 
-      #combinedMap {
-        height: 350px;
-        width: 100%;
-        border-radius: 10px;
-      }
-
       .map-section {
         background: #fff;
         padding: 15px;
         border-radius: 10px;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
       }
-
-      footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 30px;
-        color: #7f8c8d;
-        font-size: 0.9rem;
+      .submit-btn{
+        background-color:rgb(255, 128, 0);
+        border:none;
       }
-      /* ===== Government Footer ===== */
-.gov-footer {
-  background: #0c1e3c;    /* deep navy like Indian govt sites */
-  border-top: 4px solid var(--primary);
+      .submit-btn:hover{
+        background-color: orangered;
+      }
+      .reset-btn{
+        background-color: green;
+        border:none;
+      }
+      .reset-btn:hover{
+        background-color: rgb(2, 73, 2);
+      }
+      .heading {
+  background: linear-gradient(to right, #ff671f, #046a38);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* ==============================
+   INNOVATIVE SMARTSEVA FOOTER
+   ============================== */
+.smart-footer {
+  background: #ffffff;
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-.footer-title {
-  font-weight: 700;
-  margin-bottom: 12px;
+/* subtle gradient bar at top */
+.smart-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--secondary),
+    var(--primary),
+    var(--accent)
+  );
+  opacity: 0.85;
+}
+
+/* floating blur orb */
+.smart-footer::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -60px;
+  bottom: -80px;
+  background: radial-gradient(circle at center,
+    rgba(4,106,56,0.18),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* Brand logo circle */
+.smart-footer-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 0%, #ffffff, var(--accent));
   color: #ffffff;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+  transform: translateY(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.footer-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.smart-footer-logo:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.32);
 }
 
-.footer-list li {
-  margin-bottom: 6px;
+.smart-footer-title {
+  font-size: 1.1rem;
+  letter-spacing: .5px;
+  color: var(--accent);
 }
 
-.footer-list a {
-  color: #d1d5db;
+/* small pill badges */
+.smart-footer-pill {
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.03);
+  color: #334155;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.smart-footer-pill:hover {
+  background: rgba(255, 103, 31, 0.07);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* Column headings */
+.smart-footer-heading {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+}
+
+/* Links – with underline slide effect */
+.smart-footer-links a {
+  position: relative;
+  display: inline-block;
+  padding: 0.15rem 0;
+  color: #4b5563;
   text-decoration: none;
-  font-size: 0.95rem;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.footer-list a:hover {
-  color: var(--primary);
+.smart-footer-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.2s ease;
+  border-radius: 999px;
+}
+
+.smart-footer-links a:hover {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+.smart-footer-links a:hover::after {
+  width: 100%;
+}
+
+/* Inline link (email) */
+.smart-footer-inline-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.smart-footer-inline-link:hover {
   text-decoration: underline;
 }
 
-.footer-bottom {
-  background: #0a172e;
+/* Newsletter form */
+.smart-footer-form .input-group {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  overflow: hidden;
+  background: #f9fafb;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.smart-footer-input {
+  border: none;
   font-size: 0.85rem;
-  color: #d1d5db;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
-/* =======================
-   SUPPORT CTA SECTION
-   ======================= */
-.support-section {
-  background: linear-gradient(
-    90deg,
-    var(--accent),   /* Navy */
-    var(--secondary) /* Indian Green */
-  );
-  color: #fff;
-  border-top: 4px solid var(--primary); /* Saffron accent */
+  background: transparent;
 }
 
-.support-title {
-  font-size: 2rem;
-  font-weight: 800;
+.smart-footer-input:focus {
+  box-shadow: none;
 }
 
-.support-subtitle {
-  font-size: 1rem;
+.smart-footer-form .input-group:focus-within {
+  box-shadow: 0 0 0 1px rgba(255, 103, 31, 0.45);
+  border-color: var(--primary);
+}
+
+.smart-footer-btn {
+  border: none;
+  border-radius: 0;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.9rem;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.smart-footer-btn:hover {
+  transform: translateX(1px);
   opacity: 0.9;
 }
 
-/* CTA Button */
-.support-btn {
-  padding: .75rem 1.6rem;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
-  border: 2px solid var(--primary);
-  text-decoration: none;
-  transition: 0.25s ease;
+/* Social icons */
+.smart-footer-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-.support-btn:hover {
-  background: transparent;
-  color: #fff;
-  border-color: #fff;
+.smart-footer-icon:hover {
+  background: rgba(255, 103, 31, 0.08);
+  color: var(--accent);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Color swatches */
+.smart-footer-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(148, 163, 184, 0.4);
+}
+
+/* Bottom bar */
+.smart-footer-bottom {
+  border-top: 1px dashed rgba(148, 163, 184, 0.5);
+}
+
+@media (max-width: 576px) {
+  .smart-footer-logo {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 
@@ -137,17 +295,14 @@
   </head>
 
   <body>
-
-    <!-- navbar -->
 <!-- SMARTSEVA GLOBAL NAVBAR -->
 <nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
   <div class="container-fluid">
 
     <!-- LEFT: Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="index.html#home">
-      <img src="./assets/ChatGPT Image Nov 10, 2025, 02_27_51 PM.png"
-           width="36" height="36" alt="SmartSeva" style="border-radius:8px;object-fit:cover;">
-      <span class="brand-text fw-bold">SmartSeva</span>
+      <img src="./assets/icon.png"
+           width="150" height="50" alt="SmartSeva" style="border-radius:8px;object-fit:cover;">
     </a>
 
     <!-- Mobile Toggler -->
@@ -165,18 +320,18 @@
           <a class="nav-link" href="index.html#home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html#about">About Us</a>
+          <a class="nav-link" href="aboutUs.html">About Us</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-primary px-3 py-1 ms-md-2 my-1 my-md-0" href="index.html#raise">
-            Submit a Grievance
+          <a class="btn btn-primary  mx-2 my-1 my-md-0" style="font-size:larger; padding: 5px 35px 5px 35px;" href="index.html#raise">
+           OUR AI
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="dashboard.html">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html#contact">Contact Us</a>
+          <a class="nav-link" href="contactUs.html">Contact Us</a>
         </li>
       </ul>
 
@@ -206,8 +361,8 @@
               Login
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="login.html">Login</a></li>
-              <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+              <li><a class="dropdown-item" href="login.html">User Login</a></li>
+              <!-- <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>/ -->
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="adminlogin.html">Admin Login</a></li>
             </ul>
@@ -239,13 +394,15 @@
     </div>
   </div>
 </nav>
-    <!-- Contact-US -->
+
+    <!-- CONTACT FORM + MAP -->
     <div class="container py-4">
       <div class="row g-4">
+
         <!-- Query Form -->
         <div class="col-lg-6 col-md-12">
           <div class="Query-form h-100">
-            <h2 class="text-center mb-4">Query Form</h2>
+            <h2 class="text-center mb-4 heading">Query Form</h2>
             <form>
               <div class="mb-3">
                 <label class="form-label">Full Name</label>
@@ -272,167 +429,207 @@
                 <input class="form-control" type="file" />
               </div>
               <div class="col-12">
-                <button class="btn btn-primary mt-3" type="submit"> Submit form </button>
+                <button class=" mt-3 submit-btn text-white p-2 rounded-2" type="submit"> Submit form </button>
               </div>
             </form>
           </div>
         </div>
 
+        <!-- Map -->
         <div class="col-lg-6 col-md-12">
-          <!-- Contact Info + Map -->
-          <div class="h-100">
-            <div class="contact-info mb-4">
-              <h2 class="text-center mb-3">Our Office Details</h2>
+          <div class="contact-info mb-4">
+              <h2 class="text-center mb-3 heading">Our Office Details</h2>
               <p>
                 <strong>📍 Address:</strong>
                 Satyabama Complex, 301, KPHB Main Rd, Opp. Sai Baba Temple,
                 Bhagya Nagar Colony, Hyderabad, Telangana 500085
               </p>
               <p><strong>📞 Phone:</strong> +91 98765 43210</p>
-              <p><strong>✉️ Email:</strong> info@company.com</p>
+              <p><strong>✉️ Email:</strong> smartsevaforpeople@gmail.com</p>
             </div>
-            <div class="map-section">
-              <div id="combinedMap"></div>
-              <div class="text-center mt-3 d-flex flex-wrap justify-content-center gap-3">
-                <button id="getLocationBtn" class="btn btn-primary">📍 Get Directions</button>
-                <button id="resetMapBtn" class="btn btn-secondary">🔄 Reset Map</button>
-              </div>
+          <div class="map-section">
+            <div id="map"></div>
+
+            <div class="text-center mt-3 d-flex flex-wrap justify-content-center gap-3">
+              <button id="getLocationBtn" class=" submit-btn text-white p-2 rounded-2">Get Directions</button>
+              <button id="resetMapBtn" class=" reset-btn text-white p-2 rounded-2">Reset Map</button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
-<section id="support" class="support-section py-5">
-  <div class="container-lg d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4">
+<!-- FOOTER -->
+<footer id="contact" class="smart-footer mt-auto">
+  <div class="container-lg  py-5">
 
-    <!-- Text -->
-    <div>
-      <h2 class="support-title mb-2">Need Support</h2>
-      <p class="support-subtitle mb-0">Reach out to us — we’ll be happy to help you!</p>
-    </div>
+    <div class="row g-4 align-items-start">
 
-    <!-- Button -->
-    <a href="#contact" class="support-btn">
-      Contact Us <i class="bi bi-arrow-up-right"></i>
-    </a>
+      <!-- Brand + tagline -->
+      <div class="col-md-4">
+        <div class="d-flex align-items-center gap-0 mb-3">
+          <div class=" d-flex align-items-center justify-content-center"></div>
+          <div>
+            <div class="fw-bold smart-footer-title">SmartSeva</div>
+            <div class="small text-muted">Citizen–first grievance platform</div>
+          </div>
+        </div>
+        <p class="small text-muted mb-3">
+          Close the loop between citizens and departments with<br> transparent, time-bound grievance resolution.
+        </p>
 
-  </div>
-</section>
+        <!-- Mini "status" pills -->
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge smart-footer-pill">
+            <i class="bi bi-lightning-charge-fill me-1"></i> Real-time Tracking
+          </span>
+          <span class="badge smart-footer-pill">
+            <i class="bi bi-shield-check me-1"></i> Verified Complaints
+          </span>
+        </div>
+      </div>
 
-    <!-- footer -->
-<footer class="gov-footer text-light mt-5">
-  <div class="container py-5">
-
-    <div class="row gy-4">
-
-      <!-- COLUMN 1 -->
-      <div class="col-12 col-md-4">
-        <h5 class="footer-title">Quick Links</h5>
-        <ul class="footer-list">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Raise Complaint</a></li>
-          <li><a href="#">Analytics</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">FAQs</a></li>
+      <!-- Quick Nav -->
+      <div class="col-6 col-md-2">
+        <h6 class="smart-footer-heading mb-3">Navigate</h6>
+        <ul class="list-unstyled m-0 smart-footer-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#raise">OUR AI</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </div>
 
-      <!-- COLUMN 2 -->
-      <div class="col-12 col-md-4">
-        <h5 class="footer-title">Important Links</h5>
-        <ul class="footer-list">
-          <li><a href="#">Assam State Portal</a></li>
-          <li><a href="#">CM Portal</a></li>
-          <li><a href="#">RTPS State Commission</a></li>
-          <li><a href="#">Right to Information</a></li>
-          <li><a href="#">National Portal of India</a></li>
+      <!-- Support -->
+      <div class="col-6 col-md-3">
+        <h6 class="smart-footer-heading mb-3">Support</h6>
+        <ul class="list-unstyled m-0 smart-footer-links">
+          <li><a href="#">Help & FAQs</a></li>
+          <!-- <li><a href="#">How SmartSeva Works</a></li> -->
+          <li><a href="#">Citizen Charter</a></li>
+          <!-- <li><a href="#">Data & Privacy</a></li> -->
         </ul>
+
+        <div class="mt-3 small text-muted">
+          Email: <a href="mailto:smartsevaforpeople@gmail.com" class="smart-footer-inline-link">smartsevaforpeople@gmail.com</a><br>
+          Helpline: 1800-000-000
+        </div>
       </div>
 
-      <!-- COLUMN 3 -->
-      <div class="col-12 col-md-4">
-        <h5 class="footer-title">Site Info</h5>
-        <ul class="footer-list">
-          <li><a href="#">Sitemap</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-        </ul>
+      <!-- Newsletter + social -->
+      <div class="col-md-3">
+        <h6 class="smart-footer-heading mb-3">Stay in the loop</h6>
+        <p class="small text-muted mb-2">
+          Get updates on new features, dashboards and citizen tools.
+        </p>
 
-        <div class="mt-3 small">
-          <div>Last Updated: <span id="lastUpdated"></span></div>
-          <div>Total Visitors: <strong id="visitorCount">1,24,567</strong></div>
+        <form class="smart-footer-form mb-3">
+          <div class="input-group">
+            <input type="email" class="form-control smart-footer-input"
+                   placeholder="Enter your email" aria-label="Email">
+            <button class="btn smart-footer-btn" type="button">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+        </form>
+
+        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+          <span>Follow:</span>
+          <div class="d-flex gap-2">
+            <a href="#" class="smart-footer-icon"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="smart-footer-icon"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="smart-footer-icon"><i class="bi bi-instagram"></i></a>
+          </div>
         </div>
       </div>
 
     </div>
-  </div>
 
-  <div class="footer-bottom text-center py-3 mt-4">
-    © 2025 SevaSetu — Government Service Portal
+    <!-- Bottom strip -->
+    <div class="smart-footer-bottom mt-4 pt-3 d-flex flex-column flex-md-col justify-content-center align-items-center gap-2">
+      <div class="small text-muted">
+        © 2025 SmartSeva. All rights reserved.
+      </div>
+      <div class="d-flex gap-3 small smart-footer-links m-0">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+
   </div>
 </footer>
 
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
+    <!-- ================= MAP SCRIPT ================= -->
     <script>
-      const officeCoords = [17.49396, 78.40084];
-      const map = L.map("combinedMap").setView(officeCoords, 15);
+      /* ------------ OFFICE LOCATION ------------- */
+      const officeCoords = [17.494409, 78.403194]; 
+    //   17.494409409472752, 78.40319427589814
 
-      // Tile Layer
+      /* ------------ INITIALIZE MAP ------------- */
+      const map = L.map("map").setView(officeCoords, 15);
+
+      /* ------------ TILE LAYER ------------- */
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+          maxZoom: 19
       }).addTo(map);
 
-      // Office Marker
-      const officeIcon = L.divIcon({
-        html: '<div style="background-color: #e74c3c; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">📍</div>',
-        className: "office-marker",
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      });
+      /* ------------ MARKER ------------- */
+      const officeMarker = L.marker(officeCoords)
+          .addTo(map)
+          .bindPopup("<b>Our Office</b>");
 
-      const officeMarker = L.marker(officeCoords, { icon: officeIcon })
-        .addTo(map)
-        .bindPopup("<b>Our Office</b><br>Hyderabad, Telangana.")
-        .openPopup();
+      /* ------------ ROUTE HANDLER ------------- */
+      let routeControl = null;
 
-      // Get Directions
-      document
-        .getElementById("getLocationBtn")
-        .addEventListener("click", () => {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((pos) => {
-              const userCoords = [pos.coords.latitude, pos.coords.longitude];
-              L.marker(userCoords)
-                .addTo(map)
-                .bindPopup("<b>Your Location</b>")
-                .openPopup();
-              L.polyline([userCoords, officeCoords], {
-                color: "#3498db",
-                weight: 4,
-                dashArray: "5,10",
-              }).addTo(map);
-              map.fitBounds([userCoords, officeCoords]);
-            });
-          } else {
-            alert("Geolocation not supported by your browser.");
+      document.getElementById("getLocationBtn").addEventListener("click", () => {
+          if (!navigator.geolocation) {
+              alert("Your device does not support location access.");
+              return;
           }
-        });
 
-      // Reset Map
-      document.getElementById("resetMapBtn").addEventListener("click", () => {
-        map.setView(officeCoords, 15);
+          navigator.geolocation.getCurrentPosition((pos) => {
+              const userCoords = [pos.coords.latitude, pos.coords.longitude];
+
+              L.marker(userCoords)
+                  .addTo(map)
+                  .bindPopup("<b>Your Location</b>")
+                  .openPopup();
+
+              if (routeControl) {
+                  map.removeControl(routeControl);
+              }
+
+              routeControl = L.Routing.control({
+                  waypoints: [
+                      L.latLng(userCoords),
+                      L.latLng(officeCoords)
+                  ],
+                  routeWhileDragging: false,
+                  draggableWaypoints: false,
+                  addWaypoints: false,
+                  createMarker: () => null
+              }).addTo(map);
+
+              map.fitBounds([userCoords, officeCoords], { padding: [50, 50] });
+          });
       });
-      
-  document.getElementById("lastUpdated").innerText =
-    new Date().toLocaleDateString();
 
+      /* ------------ RESET MAP ------------- */
+      document.getElementById("resetMapBtn").addEventListener("click", () => {
+          map.setView(officeCoords, 15);
 
+          if (routeControl) {
+              map.removeControl(routeControl);
+              routeControl = null;
+          }
+      });
     </script>
-    <script src="app.js"></script>
+
   </body>
 </html>

@@ -274,19 +274,7 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
- (function(){
-    // Replace with your data source or function that gets current user
-    const USER = {
-      name: "Gowtham Reddy",          // full name -> displayed in navbar
-      avatar: "./assets/avatar-placeholder.png"
-    };
 
-    const nameEl = document.getElementById('userFullName');
-    const avatarEl = document.getElementById('userAvatar');
-
-    if (nameEl) nameEl.textContent = USER.name;
-    if (avatarEl) avatarEl.src = USER.avatar;
-  })();
   
 //   <!-- Translation script (API-based) -->
     (function(){
@@ -620,3 +608,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+ document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("disclaimer-modal");
+    if (!modal) return;
+
+    // --- ALWAYS SHOW POPUP ON PAGE LOAD ---
+    modal.classList.remove("d-none");
+    modal.setAttribute("aria-hidden", "false");
+
+    // --- CLOSE BUTTON ---
+    const closeBtn = modal.querySelector(".disclaimer-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        modal.classList.add("d-none");
+        modal.setAttribute("aria-hidden", "true");
+      });
+    }
+
+    // --- CLICK OUTSIDE IMAGE TO CLOSE ---
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        modal.classList.add("d-none");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    // --- ESC TO CLOSE ---
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        modal.classList.add("d-none");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+  });

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SmartSeva — AI Complaint Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Your global styles -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      :root {
+        --primary: #ff671f;
+        --secondary: #046a38;
+        --accent: #013369;
+        --bg: #f3f4f6;
+        --text: #1f2937;
+        --border: #d1d5db;
+      }
+
+      body {
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: #f3f4f6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: var(--text);
+      }
+
+      /* ======== AI HERO SECTION ======== */
+      #ai-hero {
+        background: radial-gradient(circle at top, #ffffff, #e5edf5);
+      }
+
+      .ai-hero-inner {
+        max-width: 1100px;
+      }
+
+      .ai-hero-title {
+        font-weight: 800;
+        color: var(--accent);
+      }
+
+      .ai-hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(209, 213, 219, 0.9);
+        font-size: 0.8rem;
+        color: #4b5563;
+      }
+
+      .ai-hero-image-wrapper {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.25);
+      }
+
+      .ai-hero-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* ======== AI PREDICT SECTION ======== */
+      #ai-predict-section {
+        background: rgba(255, 255, 255, 0.9);
+        border-top: 1px solid var(--border);
+      }
+
+      .ai-predict-card {
+        border-radius: 20px;
+        border: 1px solid rgba(209, 213, 219, 0.9);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+        padding: 1.8rem 1.5rem;
+        height: 100%; /* same height behaviour as video card */
+      }
+
+      .ai-video-card {
+        max-width: 100%;
+        height: 100%; /* match height with form card */
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .ai-video-wrapper {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .demo-video {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      #preview {
+        width: 100%;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 0.75rem;
+      }
+
+      #cameraContainer video {
+        width: 100%;
+        border-radius: 0.75rem;
+      }
+
+      #cameraContainer {
+        display: none;
+      }
+
+      .form-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: 0.75rem;
+        border-color: var(--border);
+      }
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.15rem rgba(255, 103, 31, 0.2);
+      }
+
+      .btn-primary {
+        --bs-btn-bg: var(--primary);
+        --bs-btn-border-color: var(--primary);
+        --bs-btn-hover-bg: #e65e1d;
+        --bs-btn-hover-border-color: #e65e1d;
+        border-radius: 0.8rem;
+        font-weight: 600;
+      }
+
+      .btn-outline-secondary {
+        border-radius: 0.8rem;
+      }
+
+      #aiResult {
+        border-radius: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+<!-- SMARTSEVA GLOBAL NAVBAR -->
+<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
+  <div class="container-fluid">
+
+    <!-- LEFT: Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html#home">
+      <img src="./assets/icon.png"
+           width="150" height="50" alt="SmartSeva" style="border-radius:8px;object-fit:cover;">
+    </a>
+
+    <!-- Mobile Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- CENTER + RIGHT -->
+    <div class="collapse navbar-collapse" id="mainNav">
+
+      <!-- CENTER: main links -->
+      <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="aboutUs.html">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary  mx-2 my-1 my-md-0" style="font-size:larger; padding: 5px 35px 5px 35px;" href="index.html#raise">
+           OUR AI
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contactUs.html">Contact Us</a>
+        </li>
+      </ul>
+
+      <!-- RIGHT: language + auth -->
+      <div class="d-flex align-items-center gap-2 ms-md-0 ms-auto">
+
+        <!-- Language dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light border dropdown-toggle py-1 px-2"
+                  id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Language
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+            <li><button class="dropdown-item" type="button">English</button></li>
+            <li><button class="dropdown-item" type="button">हिंदी</button></li>
+            <li><button class="dropdown-item" type="button">తెలుగు</button></li>
+          </ul>
+        </div>
+
+        <!-- AUTH AREA -->
+        <div class="ms-1">
+
+          <!-- STATE 1: Logged OUT (default) -->
+          <div id="navAuthLoggedOut" class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle py-1 px-3"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="login.html">User Login</a></li>
+              <!-- <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>/ -->
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="adminlogin.html">Admin Login</a></li>
+            </ul>
+          </div>
+
+          <!-- STATE 2: Logged IN (hidden until JS detects smartseva_user) -->
+          <div id="navAuthLoggedIn" class="dropdown d-none">
+            <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 py-1 px-2"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- avatar or initial -->
+              <div id="navUserAvatar"
+                   class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                   style="width:32px;height:32px;font-size:.9rem;font-weight:700;">
+                U
+              </div>
+              <span id="navUserName" class="small fw-semibold">User</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="profile.html">View Profile</a></li>
+              <li><a class="dropdown-item" href="dashboard.html">My Complaints</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item text-danger" id="btnNavLogout" type="button">Logout</button></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <main class="flex-grow-1">
+      <!-- =============== AI HERO (shown first) =============== -->
+      <section id="ai-hero" class="py-5">
+        <div class="container ai-hero-inner">
+          <div class="row align-items-center g-4">
+            <!-- Left: image -->
+            <div class="col-md-5">
+              <div class="ai-hero-image-wrapper">
+                <!-- Replace src with your AI illustration -->
+                <img
+                  src="./assets/ai-hero.jpg"
+                  alt="SmartSeva AI analysing complaints"
+                />
+              </div>
+            </div>
+
+            <!-- Right: text -->
+            <div class="col-md-7">
+              <div class="ai-hero-tag mb-3">
+                <i class="bi bi-cpu-fill"></i>
+                <span>SmartSeva AI · Pilot Preview</span>
+              </div>
+              <h1 class="ai-hero-title mb-3">
+                Let our AI understand your grievance in seconds.
+              </h1>
+              <p class="mb-3 text-muted">
+                SmartSeva is an AI-powered grievance detection system that
+                identifies civic issues from uploaded images, recognizing
+                problems like garbage, road damage, or child-related concerns
+                while also predicting their severity. It provides accurate,
+                confidence-based results that reduce manual verification for
+                authorities. With quick image analysis and automatic department
+                suggestions, SmartPraja improves transparency, speeds up
+                response times, and helps officials prioritize urgent and
+                genuine complaints..
+              </p>
+              <p class="mb-4 text-muted">
+                You stay in control — the final complaint is always filed in
+                your name, with full transparency.
+              </p>
+              <button id="btnTryModel" class="btn btn-primary btn-lg">
+                Try our AI Model
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============== AI PREDICT + RAISE COMPLAINT (hidden until click) =============== -->
+      <section id="ai-predict-section" class="py-5 d-none">
+        <div class="container">
+          <div class="mb-4 text-center">
+            <h2 class="h1 fw-extrabold brand-text">
+              SmartSeva AI · Complaint Assistant
+            </h2>
+            <p class="text-muted mb-0">
+              Describe your issue once. Our AI will estimate severity and you
+              can submit directly to SmartSeva.
+            </p>
+          </div>
+
+          <!-- CHANGED align-items-start -> align-items-stretch for equal height cols -->
+          <div class="row g-4 align-items-stretch">
+            <!-- LEFT: Form + AI prediction -->
+            <div class="col-md-6">
+              <!-- added h-100 -->
+              <div class="ai-predict-card h-100">
+                <h5 class="mb-3 fw-bold text-primary">
+                  Raise a Complaint with AI Assistance
+                </h5>
+
+                <form id="complaintForm" novalidate>
+                  <!-- Upload Image / Camera -->
+                  <div class="mb-3">
+                    <label class="form-label">Upload Image (or capture)</label>
+                    <div class="d-flex align-items-center gap-2 mb-5">
+                      <button
+                        type="button"
+                        id="fileBtn"
+                        class="btn btn-primary btn-sm"
+                      >
+                        <i class="bi bi-upload me-1"></i>Choose a file
+                      </button>
+                      <button
+                        type="button"
+                        id="cameraBtn"
+                        class="btn btn-outline-secondary btn-sm"
+                      >
+                        <i class="bi bi-camera-video"></i>
+                      </button>
+                    </div>
+                    <input
+                      type="file"
+                      id="photoInput"
+                      accept="image/*"
+                      class="d-none"
+                    />
+                    <div id="cameraContainer" class="mb-2">
+                      <video id="camera" autoplay></video>
+                      <button
+                        type="button"
+                        id="captureBtn"
+                        class="btn btn-danger btn-sm mt-2"
+                      >
+                        Capture Photo
+                      </button>
+                    </div>
+                    <img id="preview" class="d-none mt-2" alt="Preview" />
+                  </div>
+
+                  <!-- Description -->
+                  <div class="mb-3">
+                    <label class="form-label" for="description"
+                      >Short Description</label
+                    >
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      style="resize: none"
+                      rows="2"
+                      placeholder="Describe the problem briefly..."
+                    ></textarea>
+                  </div>
+
+                  <!-- Category (your dropdown) -->
+                  <div class="mb-3">
+                    <label class="form-label" for="category">Category</label>
+                    <select id="category" class="form-select" required>
+                      <option value="" disabled selected>
+                        Select Category
+                      </option>
+                      <option value="Road Issue">Road Issue</option>
+                      <option value="Child Labour">Child Labour</option>
+                      <option value="Drainage Issue">Drainage Issue</option>
+                    </select>
+                  </div>
+
+                  <!-- Location -->
+                  <div class="mb-3">
+                    <label class="form-label" for="manualLocation"
+                      >Location</label
+                    >
+                    <input
+                      type="text"
+                      id="manualLocation"
+                      class="form-control"
+                      placeholder="Type locality / street / landmark"
+                      required
+                    />
+                    <small class="text-muted">
+                      If location access is blocked, please type it manually.
+                    </small>
+                  </div>
+
+                  <!-- Buttons -->
+                  <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      id="btnSubmitComplaint"
+                    >
+                      Submit Complaint
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      id="btnPredict"
+                    >
+                      <i class="bi bi-magic me-1"></i>Predict Severity
+                    </button>
+                  </div>
+                </form>
+
+                <!-- AI Result box -->
+                <div id="aiResult" class="alert alert-info mt-4 d-none">
+                  <strong>AI Prediction:</strong>
+                  <div class="mt-1 small" id="aiResultContent"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Video instead of Map -->
+            <div class="col-md-6">
+              <!-- added h-100 -->
+              <div class="card ai-video-card shadow-sm h-100">
+                <div class="ai-video-wrapper">
+                  <video
+                    id="aiInfoVideo"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="demo-video"
+                  >
+                    <source src="./assets/video1.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+
+              <p class="small text-muted mt-2">
+                Demo view: how SmartSeva AI reads complaints, identifies risk,
+                and suggests priority.
+              </p>
+            </div>
+
+            <p class="small text-muted mt-2">
+              Demo view: how SmartSeva AI reads complaints, identifies risk, and
+              suggests priority.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER (same pattern as your main site) -->
+    <footer id="contact" class="mt-auto border-top bg-white">
+      <div class="container-lg px-3 py-5">
+        <div class="row g-4">
+          <div class="col-sm-4">
+            <div class="fw-semibold brand-text">Quick Links</div>
+            <ul class="list-unstyled mt-2 small">
+              <li><a class="footer-link" href="index.html#home">Home</a></li>
+              <li>
+                <a class="footer-link" href="index.html#about">About Us</a>
+              </li>
+              <li>
+                <a class="footer-link" href="index.html#raise"
+                  >Raise Complaint</a
+                >
+              </li>
+              <li>
+                <a class="footer-link" href="dashboard.html">Analytics</a>
+              </li>
+              <li>
+                <a class="footer-link" href="index.html#contact">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <div class="fw-semibold brand-text">About</div>
+            <p class="small text-body-secondary mt-2">
+              SmartSeva — a bridge between citizens and governance. File
+              grievances, track progress, and improve public services.
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <div class="fw-semibold brand-text">Contact</div>
+            <ul class="list-unstyled mt-2 small text-body-secondary">
+              <li>Email: support@SmartSeva.gov</li>
+              <li>Helpline: 1800-000-000</li>
+            </ul>
+            <div class="d-flex align-items-center gap-2 mt-2">
+              <span
+                class="rounded-circle d-inline-block swatch"
+                style="background: var(--secondary)"
+              ></span>
+              <span
+                class="rounded-circle d-inline-block swatch"
+                style="background: var(--primary)"
+              ></span>
+              <span
+                class="rounded-circle d-inline-block swatch"
+                style="background: var(--accent)"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center border-top pt-3 mt-4 small text-body-tertiary">
+          <div>© 2025 SmartSeva. All rights reserved.</div>
+          <div class="d-flex justify-content-center gap-3 mt-1">
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // ====== SECTION TOGGLE: hero -> predict ======
+      const heroSection = document.getElementById("ai-hero");
+      const predictSection = document.getElementById("ai-predict-section");
+      const btnTryModel = document.getElementById("btnTryModel");
+
+      if (btnTryModel) {
+        btnTryModel.addEventListener("click", () => {
+          if (heroSection) heroSection.classList.add("d-none");
+          if (predictSection) {
+            predictSection.classList.remove("d-none");
+            predictSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      }
+
+      // ====== IMAGE / CAMERA HANDLING ======
+      const fileBtn = document.getElementById("fileBtn");
+      const photoInput = document.getElementById("photoInput");
+      const cameraBtn = document.getElementById("cameraBtn");
+      const cameraContainer = document.getElementById("cameraContainer");
+      const cameraVideo = document.getElementById("camera");
+      const captureBtn = document.getElementById("captureBtn");
+      const previewImg = document.getElementById("preview");
+      const locationInput = document.getElementById("manualLocation");
+
+      let cameraStream = null;
+      let typingTimeout;
+
+      // Automatic Location (GPS) with reverse geocoding (your logic)
+      function getUserLocation() {
+        if (!navigator.geolocation || !locationInput) return;
+
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const { latitude: lat, longitude: lng } = pos.coords;
+
+          fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              if (!locationInput.value.trim()) {
+                locationInput.value =
+                  data.display_name ||
+                  `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}`;
+              }
+              // If you have a Leaflet map / function defined elsewhere:
+              if (typeof showMarker === "function") {
+                showMarker(lat, lng, "Your Location");
+              }
+            })
+            .catch((err) => {
+              console.error("Reverse geocode error:", err);
+              if (!locationInput.value.trim()) {
+                locationInput.value = `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(
+                  4
+                )}`;
+              }
+            });
+        });
+      }
+
+      function stopCamera() {
+        if (cameraStream) {
+          cameraStream.getTracks().forEach((t) => t.stop());
+          cameraStream = null;
+        }
+      }
+
+      // file button
+      if (fileBtn && photoInput) {
+        fileBtn.addEventListener("click", () => {
+          stopCamera();
+          if (cameraContainer) cameraContainer.style.display = "none";
+          photoInput.click();
+        });
+
+        photoInput.addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            previewImg.src = ev.target.result;
+            previewImg.classList.remove("d-none");
+          };
+          reader.readAsDataURL(file);
+
+          // use new location logic
+          getUserLocation();
+        });
+      }
+
+      // camera button
+      if (cameraBtn && cameraContainer && cameraVideo) {
+        cameraBtn.addEventListener("click", async () => {
+          cameraContainer.style.display = "block";
+          try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+              video: true,
+            });
+            cameraVideo.srcObject = cameraStream;
+          } catch (err) {
+            alert(
+              "Camera access blocked. Please allow camera or upload a photo."
+            );
+            cameraContainer.style.display = "none";
+          }
+        });
+      }
+
+      // capture
+      if (captureBtn && cameraVideo) {
+        captureBtn.addEventListener("click", () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = cameraVideo.videoWidth;
+          canvas.height = cameraVideo.videoHeight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(cameraVideo, 0, 0);
+          const dataUrl = canvas.toDataURL("image/png");
+
+          previewImg.src = dataUrl;
+          previewImg.classList.remove("d-none");
+
+          stopCamera();
+          cameraContainer.style.display = "none";
+
+          // use new location logic
+          getUserLocation();
+        });
+      }
+
+      //  Live Map / marker update when typing location (from your snippet)
+      if (locationInput) {
+        locationInput.addEventListener("input", () => {
+          const text = locationInput.value.trim();
+          if (text.length < 3) return;
+
+          clearTimeout(typingTimeout);
+          typingTimeout = setTimeout(async () => {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+              text
+            )}`;
+
+            try {
+              const res = await fetch(url);
+              const data = await res.json();
+
+              if (data.length > 0) {
+                const { lat, lon, display_name } = data[0];
+                // Only call showMarker if it exists (to avoid errors if no map on this page)
+                if (typeof showMarker === "function") {
+                  showMarker(lat, lon, display_name);
+                }
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          }, 500);
+        });
+      }
+
+      // ====== FORM SUBMIT (STATIC) ======
+      const complaintForm = document.getElementById("complaintForm");
+      const descriptionEl = document.getElementById("description");
+      const categoryEl = document.getElementById("category");
+
+      if (complaintForm) {
+        complaintForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const description = descriptionEl.value.trim();
+          const category = categoryEl.value;
+          const location = locationInput.value.trim();
+          const file = photoInput.files[0];
+          const previewSrc = previewImg.src || "";
+
+          const hasUploaded = !!file;
+          const hasCaptured = previewSrc.startsWith("data:image");
+
+          if (!hasUploaded && !hasCaptured) {
+            alert("Please upload an image or capture a photo.");
+            return;
+          }
+          if (!description || !category || !location) {
+            alert("Please fill description, category, and location.");
+            return;
+          }
+
+          // Build static JSON (to send to backend later)
+          const complaintData = {
+            description,
+            category,
+            location,
+            imageSource: hasUploaded ? "file" : "captured",
+          };
+
+          console.log("Complaint ready to send to backend:", complaintData);
+          alert("Complaint submitted (demo). Connect this to backend later.");
+
+          // Reset form UI
+          complaintForm.reset();
+          previewImg.classList.add("d-none");
+          previewImg.src = "";
+          photoInput.value = "";
+          document.getElementById("aiResult").classList.add("d-none");
+        });
+      }
+
+      // ====== AI PREDICT (STATIC LOGIC) ======
+      const btnPredict = document.getElementById("btnPredict");
+      const aiResultBox = document.getElementById("aiResult");
+      const aiResultContent = document.getElementById("aiResultContent");
+
+      if (btnPredict && aiResultBox && aiResultContent) {
+        btnPredict.addEventListener("click", () => {
+          const description = descriptionEl.value.trim();
+          const category = categoryEl.value;
+          const location = locationInput.value.trim();
+
+          if (!description || !category || !location) {
+            alert(
+              "Please fill description, category, and location before predicting."
+            );
+            return;
+          }
+
+          // Simple fake AI rules
+          let severity = "Medium";
+          let dept = "Municipal Department";
+          let sla = "3–5 working days";
+
+          const descLower = description.toLowerCase();
+
+          if (category === "Child Labour") {
+            severity = "Critical";
+            dept = "Child Welfare & Labour Department";
+            sla = "Within 24 hours";
+          } else if (category === "Road Issue") {
+            severity =
+              descLower.includes("accident") || descLower.includes("danger")
+                ? "High"
+                : "Medium";
+            dept = "Roads & Transport Department";
+            sla = severity === "High" ? "24–48 hours" : "3–7 working days";
+          } else if (category === "Drainage Issue") {
+            severity =
+              descLower.includes("overflow") || descLower.includes("sewage")
+                ? "High"
+                : "Medium";
+            dept = "Sanitation & Drainage Department";
+            sla = severity === "High" ? "48 hours" : "3–7 working days";
+          }
+
+          aiResultContent.innerHTML = `
+          <div><strong>Estimated severity:</strong> ${severity}</div>
+          <div><strong>Suggested department:</strong> ${dept}</div>
+          <div><strong>Indicative resolution time:</strong> ${sla}</div>
+          <div class="mt-2 text-muted small">
+            This is only an AI suggestion. Final priority and routing will be decided by the respective authority.
+          </div>
+        `;
+          aiResultBox.classList.remove("d-none");
+          aiResultBox.classList.remove(
+            "alert-info",
+            "alert-warning",
+            "alert-danger"
+          );
+          aiResultBox.classList.add(
+            severity === "Critical"
+              ? "alert-danger"
+              : severity === "High"
+              ? "alert-warning"
+              : "alert-info"
+          );
+        });
+      }
+
+      // Stop camera when leaving page (optional safety)
+      window.addEventListener("beforeunload", stopCamera);
+    </script>
+  </body>
+</html>
